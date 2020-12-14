@@ -1,37 +1,33 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Data.ResponseModel;
+using Microsoft.EntityFrameworkCore;
 using School.Areas.Admin.ViewModels;
 using School.Areas.Extensions;
 using School.Datas;
-using School.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace School.Areas.Admin.Repositories
 {
-    public class ClassRepository : IClassRepository
+    public class GroupsRepository : IGroupsRepository
     {
         private readonly DataContext _context;
-        public ClassRepository(DataContext context)
+        public GroupsRepository(DataContext context)
         {
             _context = context;
         }
-        public List<GroupViewModel> GetDevextremeList(DevxLoadOptions options)
-        {
-            throw new NotImplementedException();
-        }
+        public LoadResult GetDevextremeList(DevxLoadOptions options)
+        => DataSourceLoader.Load(_context.Groups, options);
 
-        public Group Get()
-        {
-            throw new NotImplementedException();
-        }
+        public object Get(int id)
+        => _context.Groups.FirstOrDefault(x => x.Id==id);
 
         public void Create(GroupOpModel model)
         {
             if (_context.Groups.Any(entity => entity.Name == model.Name))
                  throw new Exception("Bu adda qrup artıq mövcuddur!");
 
-            _context.Groups.Add(new Group { Name=model.Name,TeacherId=model.TeacherId});
+            _context.Groups.Add(new Models.Group { Name=model.Name });
         }
 
         public void Update(int id, GroupOpModel model)
@@ -42,7 +38,6 @@ namespace School.Areas.Admin.Repositories
             var updatedModel = _context.Groups.FirstOrDefault(x => x.Id == id);
             _context.Entry(updatedModel).State = EntityState.Modified;
             updatedModel.Name = model.Name;
-            updatedModel.TeacherId = model.TeacherId;
         }
 
         public void Delete(int id)

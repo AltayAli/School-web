@@ -7,7 +7,5 @@ namespace School.Areas.Admin.ViewModels
         [StringLength(100)]
         [Required]
         public string Name { get; set; }
-        [Required]
-        public int TeacherId { get; set; }
     }
 }

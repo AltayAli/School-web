@@ -7,8 +7,10 @@ namespace School.Datas
     {
         public DataContext(DbContextOptions options) : base(options) { }
         public DbSet<Group> Groups { get; set; }
-        public DbSet<GroupJurnal> GroupJurnals { get; set; }
-        public DbSet<Jurnal> Jurnals { get; set; }
+        public DbSet<Journal> Journals { get; set; }
+        public DbSet<GroupTeacher> GroupTeachers { get; set; }
+        public DbSet<GroupTeacherLesson> GroupTeacherLessons { get; set; }
+        public DbSet<GroupJournal> GroupJournals { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -19,6 +21,22 @@ namespace School.Datas
             {
                 entity.HasIndex(prop => prop.Name).IsUnique(true);
             });
+
+            modelBuilder.Entity<GroupTeacher>(entity =>
+            {
+                entity.HasIndex(prop => new { prop.TeacherID, prop.GroupID }).IsUnique(true);
+            });
+
+            modelBuilder.Entity<GroupTeacherLesson>(entity =>
+            {
+                entity.HasIndex(prop => new { prop.GroupTeacherId,prop.LessonId }).IsUnique(true);
+            });
+
+            modelBuilder.Entity<GroupJournal>(entity =>
+            {
+                entity.HasIndex(prop => new { prop.GroupTeacherLessonId,prop.JournalID }).IsUnique(true);
+            });
+
             base.OnModelCreating(modelBuilder);
         }
     }
