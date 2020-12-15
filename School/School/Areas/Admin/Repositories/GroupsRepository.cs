@@ -1,36 +1,33 @@
-﻿using DevExtreme.AspNet.Data;
-using DevExtreme.AspNet.Data.ResponseModel;
-using Microsoft.EntityFrameworkCore;
-using School.Areas.Admin.ViewModels;
-using School.Areas.Extensions;
+﻿using Microsoft.EntityFrameworkCore;
 using School.Datas;
+using School.Models;
 using System;
 using System.Linq;
 
 namespace School.Areas.Admin.Repositories
 {
-    public class GroupsRepository : IGroupsRepository
+    public class GroupsRepository : IBaseRepository<Group>
     {
         private readonly DataContext _context;
         public GroupsRepository(DataContext context)
         {
             _context = context;
         }
-        public LoadResult GetDevextremeList(DevxLoadOptions options)
-        => DataSourceLoader.Load(_context.Groups, options);
+        public IQueryable GetList()
+        => _context.Groups;
 
         public object Get(int id)
         => _context.Groups.FirstOrDefault(x => x.Id==id);
 
-        public void Create(GroupOpModel model)
+        public void Create(Group model)
         {
             if (_context.Groups.Any(entity => entity.Name == model.Name))
                  throw new Exception("Bu adda qrup artıq mövcuddur!");
 
-            _context.Groups.Add(new Models.Group { Name=model.Name });
+            _context.Groups.Add(new Group { Name=model.Name });
         }
 
-        public void Update(int id, GroupOpModel model)
+        public void Update(int id, Group model)
         {
             if(!Exists(id))
                 throw new Exception("Bu adda qrup artıq mövcud deyil!");

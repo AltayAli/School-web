@@ -1,9 +1,11 @@
-﻿namespace School.Areas.Admin.Repositories
+﻿using School.Models;
+
+namespace School.Areas.Admin.Repositories
 {
     public interface IRepository
     {
-        IGroupsRepository GroupsRepo { get; }
-        IGroupTeachersRepository GroupTeachersRepo { get; }
+        IBaseRepository<Group> GroupsRepo { get; }
+        IBaseRepository<GroupTeacher> GroupTeachersRepo { get; }
         int Complete();
     }
 }

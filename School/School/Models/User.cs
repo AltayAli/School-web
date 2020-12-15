@@ -16,5 +16,6 @@ namespace School.Models
         public string Password { get; set; }
         public int Role_Id { get; set; }
         public int Class_Id { get; set; }
+        public bool MustChangePass { get; set; }
     }
 }

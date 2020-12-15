@@ -1,41 +1,26 @@
-﻿using DevExtreme.AspNet.Data;
-using DevExtreme.AspNet.Data.ResponseModel;
-using Microsoft.EntityFrameworkCore;
-using School.Areas.Extensions;
+﻿using Microsoft.EntityFrameworkCore;
 using School.Datas;
 using School.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace School.Areas.Admin.Repositories
 {
-    public class GroupTeachersRepository : IGroupTeachersRepository
+    public class GroupTeachersRepository : IBaseRepository<GroupTeacher>
     {
         private readonly DataContext _context;
         public GroupTeachersRepository(DataContext context)
         {
             _context = context;
         }
-        public LoadResult GetDevextremeList(DevxLoadOptions options)
-         => DataSourceLoader.Load((
-             from gt in _context.GroupTeachers
-             join gr in _context.Groups
-             on gt.GroupID equals gr.Id
-             join t in _context.Users
-             on gt.TeacherID equals t.Id 
-             select new { 
-                Id  = gt.Id,
-                GroupName = gr.Name,
-                TeacherName = t.Name,
-             }),options);
+        public IQueryable GetList()
+            => _context.GroupTeachers;
         public object Get(int id)
-        => _context.GroupTeachers.FirstOrDefault(x => x.Id == id);
+            => _context.GroupTeachers.FirstOrDefault(x => x.Id == id);
 
         public void Create(GroupTeacher model)
-        {
-            _context.GroupTeachers.Add(model);
-        }
+            => _context.GroupTeachers.Add(model);
+        
 
         public void Update(int id, GroupTeacher model)
         {

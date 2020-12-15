@@ -1,4 +1,5 @@
 ﻿using School.Datas;
+using School.Models;
 
 namespace School.Areas.Admin.Repositories
 {
@@ -9,8 +10,8 @@ namespace School.Areas.Admin.Repositories
         {
             _context = context;
         }
-        public IGroupsRepository groupsRepository;
-        public IGroupsRepository GroupsRepo
+        public IBaseRepository<Group> groupsRepository;
+        public IBaseRepository<Group> GroupsRepo
         {
             get
             {
@@ -19,8 +20,8 @@ namespace School.Areas.Admin.Repositories
             }
         }
 
-        public IGroupTeachersRepository groupTeachersRepository;
-        public IGroupTeachersRepository GroupTeachersRepo
+        public IBaseRepository<GroupTeacher> groupTeachersRepository;
+        public IBaseRepository<GroupTeacher> GroupTeachersRepo
         {
             get
             {
