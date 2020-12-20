@@ -1,15 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using School.Areas.Admin.Repositories;
+using School.Areas.Admin.Services;
 using School.Datas;
+using School.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace School
 {
@@ -25,9 +24,14 @@ namespace School
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromDays(1);
+            });
             services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DataContext")));
-
+            services.AddHttpContextAccessor();
             services.AddControllersWithViews();
+            services.AddScoped<IFilesRepository, FilesRepository>();
+            //services.AddScoped<IServices, Areas.Admin.Services.Services>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +48,7 @@ namespace School
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseSession();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -53,12 +58,12 @@ namespace School
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
                   name: "areas",
                   pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                   );
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

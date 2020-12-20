@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using School.Datas;
+using School.Enums;
 using School.Extensions;
 using School.Models;
 using System.Linq;
@@ -18,28 +19,23 @@ namespace School.Areas.Extensions
                 DataContext _context = service.GetRequiredService<DataContext>();
                 _context.Database.Migrate();
 
-                if (!_context.Roles.Any())
+              
+                if (!_context.Users.Any(x=> x.Role == Roles.Admin))
                 {
-                    _context.Roles.AddRange(new Role { Name = "Admin" },
-                                            new Role { Name = "Teacher" },
-                                            new Role { Name = "Student" });
-
-                    if (!_context.Users.Any(x=> x.Role_Id == 1))
+                    _context.Users.Add(new User
                     {
-                        _context.Users.Add(new User
-                        {
-                            Name = "Admin",
-                            Surname = "",
-                            Password = "Admin@123".CreatePassword(),
-                            PhotoURL = "user.png",
-                            Role_Id = 1,
-                            UserName = "admin",
-                            MustChangePass = false,
-                            Class_Id = 0
-                        });
-                    }
-                        _context.SaveChanges();
+                        Name = "Admin",
+                        Surname = "",
+                        Password = "Admin@123".CreatePassword(),
+                        PhotoURL = "user.png",
+                        Role = Roles.Admin,
+                        UserName = "admin",
+                        MustChangePass = false,
+                        Class_Id = 0
+                    });
+                    _context.SaveChanges();
                 }
+                
             }
             return host;
         }

@@ -1,13 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace School.Areas.Admin.ViewModels
 {
     public class GroupViewModel
     {
-        public int Id { get; set; }
-        [StringLength(100)]
+        [Required]
         public string Name { get; set; }
-        [StringLength(100)]
-        public string  TeacherName { get; set; }
     }
 }

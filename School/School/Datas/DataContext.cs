@@ -13,7 +13,6 @@ namespace School.Datas
         public DbSet<GroupJournal> GroupJournals { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

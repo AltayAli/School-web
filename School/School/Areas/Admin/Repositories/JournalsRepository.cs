@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Data.ResponseModel;
+using Microsoft.EntityFrameworkCore;
+using School.Areas.Extensions;
 using School.Datas;
 using School.Models;
 using System;
@@ -13,13 +16,17 @@ namespace School.Areas.Admin.Repositories
         {
             _context = context;
         }
-        public IQueryable GetList()
-            => _context.Journals;
-        public object Get(int id)
+        public LoadResult GetDevextremeList(DevxLoadOptions options)
+            => DataSourceLoader.Load(_context.Journals, options);
+        public Journal Get(int id)
             => _context.Journals.FirstOrDefault(x => x.Id == id);
 
-        public void Create(Journal model)
-            => _context.Journals.Add(model);
+        public int Create(Journal model)
+        {
+            _context.Journals.Add(model);
+            _context.SaveChanges();
+            return model.Id;
+        }
 
 
         public void Update(int id, Journal model)
@@ -32,6 +39,7 @@ namespace School.Areas.Admin.Repositories
             updatedModel.Date = model.Date;
             updatedModel.Score = model.Score;
             updatedModel.Student_Id = model.Student_Id;
+            _context.SaveChanges();
 
         }
 
@@ -41,6 +49,7 @@ namespace School.Areas.Admin.Repositories
                 throw new Exception("Məlumat tapılmadı!");
 
             _context.Journals.Remove(_context.Journals.FirstOrDefault(x => x.Id == id));
+            _context.SaveChanges();
         }
         private bool Exists(int id)
             => _context.Journals.Any(x => x.Id == id);

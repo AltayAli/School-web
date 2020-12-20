@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Data.ResponseModel;
+using Microsoft.EntityFrameworkCore;
+using School.Areas.Extensions;
 using School.Datas;
 using School.Models;
 using System;
@@ -13,13 +16,17 @@ namespace School.Areas.Admin.Repositories
         {
             _context = context;
         }
-        public IQueryable GetList()
-            => _context.GroupTeachers;
-        public object Get(int id)
+        public LoadResult GetDevextremeList(DevxLoadOptions options)
+            => DataSourceLoader.Load(_context.GroupTeachers, options);
+        public GroupTeacher Get(int id)
             => _context.GroupTeachers.FirstOrDefault(x => x.Id == id);
 
-        public void Create(GroupTeacher model)
-            => _context.GroupTeachers.Add(model);
+        public int Create(GroupTeacher model)
+        {
+            _context.GroupTeachers.Add(model);
+            _context.SaveChanges();
+            return model.Id;
+        }
         
 
         public void Update(int id, GroupTeacher model)
@@ -31,6 +38,7 @@ namespace School.Areas.Admin.Repositories
             _context.Entry(updatedModel).State = EntityState.Modified;
             updatedModel.TeacherID = model.TeacherID;
             updatedModel.GroupID = model.GroupID;
+            _context.SaveChanges();
 
         }
 
@@ -40,6 +48,7 @@ namespace School.Areas.Admin.Repositories
                 throw new Exception("Məlumat tapılmadı!");
 
             _context.GroupTeachers.Remove(_context.GroupTeachers.FirstOrDefault(x => x.Id == id));
+            _context.SaveChanges();
         }
         private bool Exists(int id)
             => _context.GroupTeachers.Any(x => x.Id == id);

@@ -3,16 +3,12 @@ $(function () {
     $("#title").html("List of scholarships")
     $("#detail-link").hide();
     $("#body").dxDataGrid({
-        dataSource: new DevExpress.data.CustomStore({
-            key: "code",
-            load: function () {
-                var url = `${Model.ScholarShipsUrl}/getdevextremeList`;
-                return Model.SendRequest(`/api/get?url=${url}&check=1&origin=1`, "GET", false);
-            },
-            remove: function (key) {
-                var url = `${Model.ScholarShipsUrl}/delete/${key}`;
-                return Model.SendRequest(`/api/delete?url=${url}&check=1&origin=1`, "GET", true);
-            }
+        dataSource: new DevExpress.data.AspNet.createStore({
+            key: "ID",
+            loadUrl: "",
+            insertUrl: "",
+            updateUrl: "",
+            deleteUrl: ""
         }),
         keyExpr: "code",
         onSelectionChanged: function (selectedItems) {
@@ -29,7 +25,42 @@ $(function () {
             defered: true
         },
         editing: {
-            allowDeleting: true
+            mode: "popup",
+            allowUpdating: true,
+            allowAdding: true,
+            allowAdding: true,
+            popup: {
+                title: "Group Info",
+                showTitle: true,
+                width: 700,
+                height: 525,
+                position: {
+                    my: "top",
+                    at: "top",
+                    of: window
+                }
+            },
+            form: {
+                items: [{
+                    itemType: "group",
+                    colCount: 2,
+                    colSpan: 2,
+                    items: ["FirstName", "LastName", "Prefix", "BirthDate", "Position", "HireDate", {
+                        dataField: "Notes",
+                        editorType: "dxTextArea",
+                        colSpan: 2,
+                        editorOptions: {
+                            height: 100
+                        }
+                    }]
+                }, {
+                    itemType: "group",
+                    colCount: 2,
+                    colSpan: 2,
+                    caption: "Home Address",
+                    items: ["StateID", "Address"]
+                }]
+            }
         },
         columns: [{
             dataField: "code",

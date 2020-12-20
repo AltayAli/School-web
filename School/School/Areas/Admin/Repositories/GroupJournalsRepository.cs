@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Data.ResponseModel;
+using Microsoft.EntityFrameworkCore;
+using School.Areas.Extensions;
 using School.Datas;
 using School.Models;
 using System;
@@ -13,15 +16,19 @@ namespace School.Areas.Admin.Repositories
         {
             _context = context;
         }
-        
-        public IQueryable GetList()
-            => _context.GroupJournals;
 
-        public object Get(int id)
+        public LoadResult GetDevextremeList(DevxLoadOptions options)
+            => DataSourceLoader.Load(_context.GroupJournals, options);
+
+        public GroupJournal Get(int id)
             => _context.GroupJournals.FirstOrDefault(x => x.Id == id);
 
-        public void Create(GroupJournal model)
-            => _context.GroupJournals.Add(model);
+        public int Create(GroupJournal model)
+        {
+            _context.GroupJournals.Add(model);
+            _context.SaveChanges();
+            return model.Id;
+        }
         
         public void Update(int id, GroupJournal model)
         {
@@ -32,6 +39,7 @@ namespace School.Areas.Admin.Repositories
             _context.Entry(updatedModel).State = EntityState.Modified;
             updatedModel.GroupTeacherLessonId = model.GroupTeacherLessonId;
             updatedModel.JournalID = model.JournalID;
+            _context.SaveChanges();
         }
         public void Delete(int id)
         {
@@ -39,6 +47,7 @@ namespace School.Areas.Admin.Repositories
                 throw new Exception("Məlumat tapılmadı!");
 
             _context.GroupJournals.Remove(_context.GroupJournals.FirstOrDefault(x => x.Id == id));
+            _context.SaveChanges();
         }
         private bool Exists(int id)
             => _context.GroupJournals.Any(x => x.Id == id);

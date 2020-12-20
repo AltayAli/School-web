@@ -2,7 +2,7 @@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
-    string fullName = HttpContextAccessor.HttpContext.Session.GetString("full_name");
+    string fullName = /*HttpContextAccessor.HttpContext.Session.GetString("full_name")??*/"";
 }
 
 <!DOCTYPE html>
@@ -24,6 +24,7 @@
     <link href="~/assets/css/layout.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/components.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/colors.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/site.css" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
 
 

@@ -6,6 +6,10 @@ namespace School.Areas.Admin.Repositories
     {
         IBaseRepository<Group> GroupsRepo { get; }
         IBaseRepository<GroupTeacher> GroupTeachersRepo { get; }
-        int Complete();
+        IBaseRepository<GroupJournal> GroupJournalsRepo { get; }
+        IBaseRepository<GroupTeacherLesson> GroupTeacherLessonsRepo { get; }
+        IBaseRepository<Journal> JournalsRepo { get; }
+        IBaseRepository<Lesson> LessonsRepo { get; }
+        IBaseRepository<User> UsersRepo { get; }
     }
 }
