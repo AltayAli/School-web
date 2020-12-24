@@ -5,5 +5,6 @@
         public int Id { get; set; }
         public int GroupTeacherId { get; set; }
         public int LessonId { get; set; }
+        public bool IsEnded { get; set; }
     }
 }

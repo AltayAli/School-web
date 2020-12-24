@@ -37,7 +37,8 @@ namespace School.Areas.Admin.Repositories
 
             var updatedModel = _context.Lessons.FirstOrDefault(x => x.Id == id);
             _context.Entry(updatedModel).State = EntityState.Modified;
-            updatedModel.Date = model.Date;
+            updatedModel.StartDate = model.StartDate;
+            updatedModel.EndDate = model.EndDate;
             updatedModel.File_Name = model.File_Name;
             updatedModel.Name = model.Name;
             _context.SaveChanges();

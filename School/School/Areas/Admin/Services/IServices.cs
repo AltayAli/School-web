@@ -4,5 +4,6 @@
     {
         IGroupsService GroupsService { get; }
         IUsersServices UsersServices { get; }
+        IGroupTeachersService GroupTeachersService { get; }
     }
 }

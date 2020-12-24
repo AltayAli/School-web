@@ -27,5 +27,15 @@ namespace School.Areas.Admin.Services
                 return _usersServices;
             }
         }
+
+        private IGroupTeachersService _groupTeachersServices;
+        public IGroupTeachersService GroupTeachersService
+        {
+            get
+            {
+                _groupTeachersServices ??= new GroupTeachersService(_repo);
+                return _groupTeachersServices;
+            }
+        }
     }
 }

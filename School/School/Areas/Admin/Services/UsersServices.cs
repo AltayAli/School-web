@@ -17,6 +17,14 @@ namespace School.Areas.Admin.Services
         public LoadResult GetDevextremeList(DevxLoadOptions options)
         => _repo.UsersRepo.GetDevextremeList(options);
 
+        public LoadResult GetTeachersList(DevxLoadOptions options)
+        => _repo.UsersRepo.GetTeachersList(options);
+
+        public LoadResult GetAdminsList(DevxLoadOptions options)
+        => _repo.UsersRepo.GetAdminsList(options);
+
+        public LoadResult GetStudentsList(DevxLoadOptions options)
+        => _repo.UsersRepo.GetStudentsList(options);
         public UserViewModel Get(int id)
         {
             var model = _repo.UsersRepo.Get(id);

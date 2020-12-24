@@ -70,8 +70,8 @@ namespace School.Areas.Admin.Repositories
             }
         }
 
-        private IBaseRepository<User> _usersRepository;
-        public IBaseRepository<User> UsersRepo
+        private IUsersRepository _usersRepository;
+        public IUsersRepository UsersRepo
         {
             get
             {

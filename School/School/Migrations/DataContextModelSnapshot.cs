@@ -91,6 +91,9 @@ namespace School.Migrations
                     b.Property<int>("GroupTeacherId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsEnded")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
 
@@ -131,7 +134,7 @@ namespace School.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("File_Name")
@@ -141,6 +144,9 @@ namespace School.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

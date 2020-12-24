@@ -3,6 +3,7 @@ using DevExtreme.AspNet.Data.ResponseModel;
 using Microsoft.EntityFrameworkCore;
 using School.Areas.Extensions;
 using School.Datas;
+using School.Enums;
 using School.Extensions;
 using School.Models;
 using System;
@@ -10,7 +11,7 @@ using System.Linq;
 
 namespace School.Areas.Admin.Repositories
 {
-    public class UsersRepository : IBaseRepository<User>
+    public class UsersRepository : IUsersRepository
     {
         private readonly DataContext _context;
         public UsersRepository(DataContext context)
@@ -20,6 +21,14 @@ namespace School.Areas.Admin.Repositories
         public LoadResult GetDevextremeList(DevxLoadOptions options)
             => DataSourceLoader.Load(_context.Users, options);
 
+        public LoadResult GetTeachersList(DevxLoadOptions options)
+            => DataSourceLoader.Load(_context.Users.Where(x => x.Role == Roles.Teacher), options);
+
+        public LoadResult GetAdminsList(DevxLoadOptions options)
+            => DataSourceLoader.Load(_context.Users.Where(x => x.Role == Roles.Admin), options);
+
+        public LoadResult GetStudentsList(DevxLoadOptions options)
+            => DataSourceLoader.Load(_context.Users.Where(x=>x.Role==Roles.Student), options);
         public User Get(int id)
         => _context.Users.FirstOrDefault(x => x.Id == id);
 

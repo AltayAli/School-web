@@ -20,8 +20,26 @@ namespace School.Areas.Admin.Controllers
         {
             return View();
         }
+        public IActionResult AdminIndex()
+        {
+            return View();
+        }
+        public IActionResult TeacherIndex()
+        {
+            return View();
+        }
+        public IActionResult StudentIndex()
+        {
+            return View();
+        }
         public LoadResult GetList(DevxLoadOptions options)
         => _services.UsersServices.GetDevextremeList(options);
+        public LoadResult GetTeachersList(DevxLoadOptions options)
+        => _services.UsersServices.GetTeachersList(options);
+        public LoadResult GetAdminsList(DevxLoadOptions options)
+        => _services.UsersServices.GetAdminsList(options);
+        public LoadResult GetStudentsList(DevxLoadOptions options)
+        => _services.UsersServices.GetStudentsList(options);
 
         public IActionResult Create()
         {

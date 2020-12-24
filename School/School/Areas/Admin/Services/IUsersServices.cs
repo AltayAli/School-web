@@ -7,6 +7,9 @@ namespace School.Areas.Admin.Services
     public interface IUsersServices
     {
         LoadResult GetDevextremeList(DevxLoadOptions options);
+        LoadResult GetTeachersList(DevxLoadOptions options);
+        LoadResult GetAdminsList(DevxLoadOptions options);
+        LoadResult GetStudentsList(DevxLoadOptions options);
         UserViewModel Get(int id);
         int Create(UserViewModel model);
         void Update(int id, UserViewModel model);

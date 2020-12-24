@@ -10,6 +10,6 @@ namespace School.Areas.Admin.Repositories
         IBaseRepository<GroupTeacherLesson> GroupTeacherLessonsRepo { get; }
         IBaseRepository<Journal> JournalsRepo { get; }
         IBaseRepository<Lesson> LessonsRepo { get; }
-        IBaseRepository<User> UsersRepo { get; }
+        IUsersRepository UsersRepo { get; }
     }
 }

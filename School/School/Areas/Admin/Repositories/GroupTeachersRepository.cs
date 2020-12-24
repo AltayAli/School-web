@@ -23,6 +23,9 @@ namespace School.Areas.Admin.Repositories
 
         public int Create(GroupTeacher model)
         {
+            if (_context.GroupTeachers.Any(x => x.GroupID == model.GroupID && x.TeacherID == model.TeacherID))
+                throw new Exception("Artıq sistemdə mövcuddur!");
+
             _context.GroupTeachers.Add(model);
             _context.SaveChanges();
             return model.Id;
@@ -34,11 +37,18 @@ namespace School.Areas.Admin.Repositories
             if (!Exists(id))
                 throw new Exception("Məlumat tapılmadı!");
 
-            var updatedModel = _context.GroupTeachers.FirstOrDefault(x => x.Id == id);
-            _context.Entry(updatedModel).State = EntityState.Modified;
-            updatedModel.TeacherID = model.TeacherID;
-            updatedModel.GroupID = model.GroupID;
-            _context.SaveChanges();
+            try
+            {
+                var updatedModel = _context.GroupTeachers.FirstOrDefault(x => x.Id == id);
+                _context.Entry(updatedModel).State = EntityState.Modified;
+                updatedModel.TeacherID = model.TeacherID == 0 ? updatedModel.TeacherID : model.TeacherID;
+                updatedModel.GroupID = model.GroupID==0?updatedModel.GroupID:model.GroupID;
+                _context.SaveChanges();
+            }
+            catch
+            {
+                 throw new Exception("Artıq sistemdə mövcuddur!");
+            }
 
         }
 

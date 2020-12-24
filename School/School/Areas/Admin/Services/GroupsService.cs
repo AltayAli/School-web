@@ -19,7 +19,6 @@ namespace School.Areas.Admin.Services
         public void Create(GroupViewModel model)
         {
             _repo.GroupsRepo.Create(new Models.Group { Name = model.Name });
-            
         }
 
         public void Update(int id, GroupViewModel model)
