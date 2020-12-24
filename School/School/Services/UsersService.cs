@@ -12,12 +12,9 @@ namespace School.Services
     {
         private readonly DataContext _context;
         private readonly IHttpContextAccessor _accessor;
-        private readonly ITokenService _tokenService;
         public UsersService(DataContext context, 
-                                        IHttpContextAccessor accessor,      
-                                                ITokenService tokenService)
+                                        IHttpContextAccessor accessor)
         {
-            _tokenService = tokenService;
             _context = context;
             _accessor = accessor;
         }

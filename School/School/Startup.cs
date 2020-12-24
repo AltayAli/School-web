@@ -30,21 +30,9 @@ namespace School
                 options.IdleTimeout = TimeSpan.FromDays(1);
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidIssuer = Configuration["JWT:Issuer"],
-                        ValidAudience = Configuration["JWT:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"]))
-                    });
-
             services.AddDbContext<DataContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DataContext")));
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
-            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IFilesRepository, FilesRepository>();
         }
