@@ -16,6 +16,8 @@ namespace School.Areas.Admin.Services
         public LoadResult GetDevextremeList(DevxLoadOptions options)
         => _repo.GroupsRepo.GetDevextremeList(options);
 
+        public LoadResult GetStudentsCountForGroup(DevxLoadOptions options)
+        => _repo.GroupsRepo.GetStudentsCountForGroups(options);
         public void Create(GroupViewModel model)
         {
             _repo.GroupsRepo.Create(new Models.Group { Name = model.Name });
@@ -32,5 +34,6 @@ namespace School.Areas.Admin.Services
             _repo.GroupsRepo.Delete(id);
             
         }
+
     }
 }

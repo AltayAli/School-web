@@ -3,13 +3,12 @@ using DevExtreme.AspNet.Data.ResponseModel;
 using Microsoft.EntityFrameworkCore;
 using School.Areas.Extensions;
 using School.Datas;
-using School.Models;
 using System;
 using System.Linq;
 
 namespace School.Areas.Admin.Repositories
 {
-    public class GroupsRepository : IBaseRepository<Models.Group>
+    public class GroupsRepository : IGroupsRepository
     {
         private readonly DataContext _context;
         public GroupsRepository(DataContext context)
@@ -19,7 +18,12 @@ namespace School.Areas.Admin.Repositories
 
         public LoadResult GetDevextremeList(DevxLoadOptions options)
             => DataSourceLoader.Load(_context.Groups, options);
-
+        public LoadResult GetStudentsCountForGroups(DevxLoadOptions options)
+            => DataSourceLoader.Load((from gr in _context.Groups
+                                      select new { 
+                                        GroupName = gr.Name,
+                                        StudentsCount = _context.Users.Count(x=>x.Class_Id == gr.Id&&x.Role==Enums.Roles.Student)
+                                      }), options);
         public Models.Group Get(int id)
         => _context.Groups.FirstOrDefault(x => x.Id==id);
 

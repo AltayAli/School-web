@@ -1,6 +1,7 @@
 ﻿using DevExtreme.AspNet.Data.ResponseModel;
 using School.Areas.Extensions;
 using School.Models;
+using System.Collections.Generic;
 
 namespace School.Areas.Admin.Repositories
 {
@@ -8,6 +9,6 @@ namespace School.Areas.Admin.Repositories
     {
         LoadResult GetTeachersList(DevxLoadOptions options);
         LoadResult GetAdminsList(DevxLoadOptions options);
-        LoadResult GetStudentsList(DevxLoadOptions options);
+        List<User> GetStudentsList();
     }
 }

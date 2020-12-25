@@ -3,5 +3,6 @@
     public interface IServices
     {
         ILessonService LessonService { get; }
+        IGroupsService GroupsService { get; }
     }
 }

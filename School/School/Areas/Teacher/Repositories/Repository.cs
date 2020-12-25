@@ -56,7 +56,7 @@ namespace School.Areas.Teacher.Repositories
         {
             get
             {
-                _usersRepository = new UsersRepository(_context);
+                _usersRepository ??= new UsersRepository(_context);
                 return _usersRepository;
             }
         }
@@ -65,8 +65,17 @@ namespace School.Areas.Teacher.Repositories
         {
             get
             {
-                _groupTeachersRepository = new GroupTeachersRepository(_context);
+                _groupTeachersRepository ??= new GroupTeachersRepository(_context);
                 return _groupTeachersRepository;
+            }
+        }
+        private IGroupsRepository _groupsRepository;
+        public IGroupsRepository GroupsRepo
+        {
+            get
+            {
+                _groupsRepository ??= new GroupsRepository(_context);
+                return _groupsRepository;
             }
         }
     }

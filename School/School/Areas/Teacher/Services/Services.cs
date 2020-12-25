@@ -18,5 +18,14 @@ namespace School.Areas.Teacher.Services
                 return _lessonService;
             }
         }
+        private IGroupsService _groupsService;
+        public IGroupsService GroupsService
+        {
+            get
+            {
+                _groupsService ??= new GroupsService(_repo);
+                return _groupsService;
+            }
+        }
     }
 }

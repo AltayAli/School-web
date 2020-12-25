@@ -30,6 +30,7 @@ namespace School.Services
                     _accessor.HttpContext.Session.SetString("full_name", $"{user.Name} {user.Surname}");
                     _accessor.HttpContext.Session.SetString("photo_url", user.PhotoURL);
                     _accessor.HttpContext.Session.SetString("role", user.Role.ToString());
+                    _accessor.HttpContext.Session.SetInt32("id", user.Id);
                     _accessor.HttpContext.Session.SetString("must_change_password", user.MustChangePass.ToString());
 
                     return user.Role.ToString();

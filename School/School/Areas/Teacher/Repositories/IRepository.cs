@@ -8,6 +8,7 @@ namespace School.Areas.Teacher.Repositories
         IBaseRepository<GroupTeacherLesson> GroupTeacherLessonsRepo { get; }
         IBaseRepository<Journal> JournalsRepo { get; }
         ILessonRepository LessonsRepo { get; }
+        IGroupsRepository GroupsRepo { get; }
         IUsersRepository UsersRepo { get; }
         IGroupTeachersRepository GroupTeachersRepo { get; }
     }

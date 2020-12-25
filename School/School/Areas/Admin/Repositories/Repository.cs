@@ -10,8 +10,8 @@ namespace School.Areas.Admin.Repositories
         {
             _context = context;
         }
-        private IBaseRepository<Group> _groupsRepository;
-        public IBaseRepository<Group> GroupsRepo
+        private IGroupsRepository _groupsRepository;
+        public IGroupsRepository GroupsRepo
         {
             get
             {

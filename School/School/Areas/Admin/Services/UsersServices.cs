@@ -1,8 +1,11 @@
-﻿using DevExtreme.AspNet.Data.ResponseModel;
+﻿using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Data.ResponseModel;
 using School.Areas.Admin.Repositories;
 using School.Areas.Admin.ViewModels;
 using School.Areas.Extensions;
 using School.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace School.Areas.Admin.Services
 {
@@ -24,7 +27,7 @@ namespace School.Areas.Admin.Services
         => _repo.UsersRepo.GetAdminsList(options);
 
         public LoadResult GetStudentsList(DevxLoadOptions options)
-        => _repo.UsersRepo.GetStudentsList(options);
+        => DataSourceLoader.Load(_repo.UsersRepo.GetStudentsList(),options);
         public UserViewModel Get(int id)
         {
             var model = _repo.UsersRepo.Get(id);
@@ -62,6 +65,24 @@ namespace School.Areas.Admin.Services
         {
             _repo.UsersRepo.Delete(id);
             
+        }
+
+        public void SetStudentsToGroup(GroupStudentViewModel model)
+        {
+            var students = _repo.UsersRepo.GetStudentsList().Where(x=>x.Class_Id == model.GroupId && !model.StudentsId.Contains(x.Id));
+
+            foreach(var student in students)
+            {
+                student.Class_Id = 0;
+                _repo.UsersRepo.Update(student.Id, student);
+            }
+
+            foreach (var id in model.StudentsId)
+            {
+               var student = _repo.UsersRepo.Get(id);
+                student.Class_Id = model.GroupId;
+                _repo.UsersRepo.Update(id, student);
+            }
         }
     }
 }

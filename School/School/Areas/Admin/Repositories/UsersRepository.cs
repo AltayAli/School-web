@@ -7,6 +7,7 @@ using School.Enums;
 using School.Extensions;
 using School.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace School.Areas.Admin.Repositories
@@ -27,8 +28,8 @@ namespace School.Areas.Admin.Repositories
         public LoadResult GetAdminsList(DevxLoadOptions options)
             => DataSourceLoader.Load(_context.Users.Where(x => x.Role == Roles.Admin), options);
 
-        public LoadResult GetStudentsList(DevxLoadOptions options)
-            => DataSourceLoader.Load(_context.Users.Where(x=>x.Role==Roles.Student), options);
+        public List<User> GetStudentsList()
+            => _context.Users.Where(x=>x.Role==Roles.Student).ToList();
         public User Get(int id)
         => _context.Users.FirstOrDefault(x => x.Id == id);
 
