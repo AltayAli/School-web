@@ -22,12 +22,13 @@ namespace School.Areas.Admin.Controllers
         }
         public LoadResult GetList(DevxLoadOptions options)
         => _services.GroupsService.GetStudentsCountForGroup(options);
-        public IActionResult Create()
+        [HttpGet("{id}")]
+        public IActionResult Update(int id)
         {
-            return View();
+            return View(_services.GroupsService.GetStudentsForGroupId(id));
         }
         [HttpPost]
-        public IActionResult Create([FromBody] GroupStudentViewModel model)
+        public IActionResult Update([FromBody] GroupStudentViewModel model)
         {
             try
             {

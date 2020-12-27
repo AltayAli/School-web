@@ -56,7 +56,7 @@ namespace School
 
             app.UseRouting();
 
-            //app.UseMiddleware<CheckSessionMiddleware>();
+            app.UseMiddleware<CheckSessionMiddleware>();
             //app.UseAuthentication();
             app.UseAuthorization();
 

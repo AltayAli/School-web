@@ -24,6 +24,12 @@ namespace School.Controllers
             var redirectUrl = role == "" ? "/" : $"/{role}/home";
             return Redirect(redirectUrl);
         }
+
+        public IActionResult LogOut()
+        {
+            _service.DeleteSession();
+            return Redirect("/");
+        }
         public IActionResult ChangePassword()
         {
             return View();

@@ -59,5 +59,10 @@ namespace School.Services
             }
             return "";
         }
+
+        public void DeleteSession()
+        {
+            _accessor.HttpContext.Session.Clear();
+        }
     }
 }

@@ -18,6 +18,8 @@ namespace School.Areas.Admin.Services
 
         public LoadResult GetStudentsCountForGroup(DevxLoadOptions options)
         => _repo.GroupsRepo.GetStudentsCountForGroups(options);
+        public object GetStudentsForGroupId(int groupId)
+        => _repo.GroupsRepo.GetStudentsForGroupId(groupId);
         public void Create(GroupViewModel model)
         {
             _repo.GroupsRepo.Create(new Models.Group { Name = model.Name });

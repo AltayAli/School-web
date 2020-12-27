@@ -6,5 +6,6 @@ namespace School.Services
     {
         string IsOk(LoginViewModel model);
         string ChangePassword(PasswordChangeViewModel model);
+        void DeleteSession();
     }
 }

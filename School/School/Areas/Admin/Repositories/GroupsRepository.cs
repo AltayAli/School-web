@@ -1,6 +1,7 @@
 ﻿using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
 using Microsoft.EntityFrameworkCore;
+using School.Areas.Admin.ViewModels;
 using School.Areas.Extensions;
 using School.Datas;
 using System;
@@ -21,9 +22,17 @@ namespace School.Areas.Admin.Repositories
         public LoadResult GetStudentsCountForGroups(DevxLoadOptions options)
             => DataSourceLoader.Load((from gr in _context.Groups
                                       select new { 
+                                        Id = gr.Id,
                                         GroupName = gr.Name,
                                         StudentsCount = _context.Users.Count(x=>x.Class_Id == gr.Id&&x.Role==Enums.Roles.Student)
                                       }), options);
+        public object GetStudentsForGroupId(int groupId)
+            => (from gr in _context.Groups where gr.Id == groupId
+                select new 
+                {
+                    GroupId = gr.Id,
+                    StudentsId = _context.Users.Where(x => x.Class_Id == gr.Id && x.Role == Enums.Roles.Student).Select(x => x.Id).ToArray()
+                }).FirstOrDefault();
         public Models.Group Get(int id)
         => _context.Groups.FirstOrDefault(x => x.Id==id);
 

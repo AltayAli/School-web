@@ -6,13 +6,6 @@ $(function () {
             load: function () {
                 return Model.SendRequest("/admin/groupstudents/getlist");
             },
-            insert: function (values) {
-                console.log(values)
-                return Model.SendRequest("/admin/groupstudents/create", "POST", true, JSON.stringify(values));
-            },
-            update: function (key, values) {
-                return Model.SendRequest("/admin/groupstudents/update/" + key, "PUT", true, JSON.stringify(values));
-            },
         }),
         keyExpr: "id",
         showBorders: true,
@@ -21,13 +14,12 @@ $(function () {
         errorRowEnabled: false,
         columnAutoWidth: true,
         hoverStateEnable: true,
+        onSelectionChanged: function (selectedItems) {
+            selection_changed(selectedItems.selectedRowsData[0]);
+        },
         selection: {
             mode: "single",
             defered: true
-        },
-        editing: {
-            mode: "popup",
-            allowDeleting: true,
         },
         columns: [{
             dataField: "groupName",
@@ -54,7 +46,7 @@ $(function () {
     }
 
     $("#detail-link").hide();
-    $("#create-link").attr("href", `/admin/groupstudents/create`);
+    $("#create-link").hide();
 });
 
 
@@ -62,6 +54,7 @@ $(function () {
 let FormCreater = {
     CreateForm: function (model, isCreate) {
         var key = "", dataGrid;
+
         var form = $("#form").dxForm({
             formData: model,
             labelLocation: "top",
@@ -74,6 +67,7 @@ let FormCreater = {
                     {
                         dataField: "groupId",
                         editorType: "dxSelectBox",
+                        label: { text: "Qrup" },
                         colSpan: 6,
                         editorOptions: {
                             dataSource: DevExpress.data.AspNet.createStore({
@@ -89,19 +83,21 @@ let FormCreater = {
                         editorType: "dxDropDownBox",
                         colSpan: 6,
                         editorOptions: {
-                            valueExpr: "Id",
+                            valueExpr: "id",
                             deferRendering: false,
                             placeholder: "Tələbələri seçin...",
-                            displayExpr: function (item) {
-                                return item && item.Name;
-                            },
+                            label: { text: `Tələbələr` },
+                            displayExpr: null,
+                            value :null,
                             showClearButton: true,
                             contentTemplate: function (e) {
-                                var value = e.component.option("value"),
-                                    $dataGrid = $("<div>").dxDataGrid({
+                                var $dataGrid = $("<div>").dxDataGrid({
                                         dataSource: DevExpress.data.AspNet.createStore({
                                             key: "id",
                                             loadUrl: `/admin/users/getstudentslist`,
+                                            onLoaded: function () {
+                                                form.option("items[0].items[1].label.text", `Tələbələr(${model["studentsId"].length} tələbə seçilib)`);
+                                            }
                                         }),
                                         columns: [{
                                             dataField: "id",
@@ -116,17 +112,22 @@ let FormCreater = {
                                             dataField: "surname",
                                             caption: "Soyadı"
                                         }, {
-                                            dataField: "classId",
+                                            dataField: "class_Id",
                                             caption: "Group",
-                                            editorOptions: {
+                                            lookup: {
                                                 dataSource: DevExpress.data.AspNet.createStore({
                                                     key: "id",
-                                                    loadUrl: "/admin/groups/getlist",
+                                                    loadUrl: "/admin/groups/getlist"
                                                 }),
-                                                displayExpr: "name",
-                                                valueExpr: "id"
+                                                valueExpr: "id",
+                                                displayExpr: "name"
                                             }
                                         }],
+                                        searchPanel: {
+                                            visible: true,
+                                            width: 240,
+                                            placeholder: "Tələbə axtar..."
+                                        },
                                         selectAllModeOptions: {
                                             dataSource: ["allPages", "page"],
                                             bindingOptions: {
@@ -134,22 +135,23 @@ let FormCreater = {
                                             }
                                         },
                                         hoverStateEnabled: true,
-                                        allowSelectedAll: true,
                                         paging: { enabled: true, pageSize: 10 },
                                         filterRow: { visible: true },
                                         scrolling: { mode: "infinite" },
                                         selection: { mode: "multiple" },
-                                        selectedRowKeys: [value],
+                                        selectedRowKeys: model["studentsId"],
                                         height: "100%",
-                                        onSelectionChanged: function (selectedItems) {
+                                    onSelectionChanged: function (selectedItems) {
                                             var keys = selectedItems.selectedRowKeys,
-                                                hasSelection = keys.length;
-                                            $("#code").val(keys)
-                                            e.component.option("value", hasSelection ? keys : null);
+                                            hasSelection = keys.length;
+                                            model["studentsId"] = keys;
+                                            form.option("items[0].items[1].label.text", `Tələbələr(${keys.length} tələbə seçilib)`);
+                                            e.component.option("value",/* hasSelection ? keys :*/ null);
+                                           
                                         }
                                     });
                                 dataGrid = $dataGrid.dxDataGrid("instance");
-                                dataGrid.text = "";
+
                                 e.component.on("valueChanged", function (args) {
                                     dataGrid.selectRows(args.value, false);
                                 });
@@ -183,10 +185,7 @@ let FormCreater = {
 
         $("#form").on("submit", function (e) {
             var data = form.option("formData");
-            let url = `/admin/groupstudents/`;
-            url += isCreate ? "create" : `update/${key}`;
-            let method = isCreate ? "post" : "put";
-            Model.SendRequest(url, method, true, JSON.stringify(data))
+            Model.SendRequest(`/admin/groupstudents/update`, "post", true, JSON.stringify(data))
                 .then(() => {
                     window.location.href = `/admin/groupstudents/index`
                 });

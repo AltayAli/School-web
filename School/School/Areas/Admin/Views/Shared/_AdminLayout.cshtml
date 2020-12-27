@@ -2,7 +2,7 @@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
-    string fullName = /*HttpContextAccessor.HttpContext.Session.GetString("full_name")??*/"";
+    string fullName = HttpContextAccessor.HttpContext.Session.GetString("full_name") ?? "";
 }
 
 <!DOCTYPE html>
@@ -94,7 +94,7 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="/forms/editaccountform" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
+                        <a href="/account/logout" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
                         <a asp-controller="account" asp-action="logout" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
                     </div>
                 </li>

@@ -2,7 +2,7 @@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
-    string fullName = /*HttpContextAccessor.HttpContext.Session.GetString("full_name")??*/"";
+    string fullName = HttpContextAccessor.HttpContext.Session.GetString("full_name") ?? "";
 }
 
 <!DOCTYPE html>
@@ -106,7 +106,7 @@
     <div class="page-content">
 
         <!-- Main sidebar -->
-        <partial name="_Sidebar" />
+        @*<partial name="_Sidebar" />*@
         <!-- /main sidebar -->
         <!-- Main content -->
         <div class="content-wrapper">

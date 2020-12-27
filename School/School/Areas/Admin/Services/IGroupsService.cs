@@ -8,6 +8,7 @@ namespace School.Areas.Admin.Services
     {
         LoadResult GetDevextremeList(DevxLoadOptions options);
         LoadResult GetStudentsCountForGroup(DevxLoadOptions options);
+        object GetStudentsForGroupId(int groupId);
         void Create(GroupViewModel model);
         void Update(int id,GroupViewModel model);
         void Delete(int id);

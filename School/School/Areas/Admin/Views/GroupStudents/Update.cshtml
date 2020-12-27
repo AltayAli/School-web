@@ -57,7 +57,7 @@
         import { Form } from "/ui.js/groupstudents.js";
         import Model from "/ui.js/general.js";
         $(document).ready(() => {
-            Form.CreateForm(@Html.Raw(new { }), true);
+            Form.CreateForm(@Html.Raw(Json.Serialize(Model)), false);
 
         })
     </script>
