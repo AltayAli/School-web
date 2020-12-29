@@ -4,9 +4,9 @@ namespace School.Areas.Teacher.Repositories
 {
     public interface IRepository
     {
-        IBaseRepository<GroupJournal> GroupJournalsRepo { get; }
-        IBaseRepository<GroupTeacherLesson> GroupTeacherLessonsRepo { get; }
-        IBaseRepository<Journal> JournalsRepo { get; }
+        IGroupJournalRepository GroupJournalsRepo { get; }
+        IGroupTeacherLessonsRepository GroupTeacherLessonsRepo { get; }
+        IJournalsRepository JournalsRepo { get; }
         ILessonRepository LessonsRepo { get; }
         IGroupsRepository GroupsRepo { get; }
         IUsersRepository UsersRepo { get; }

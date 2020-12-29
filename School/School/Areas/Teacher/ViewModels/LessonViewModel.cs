@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace School.Areas.Teacher.ViewModels
 {
@@ -8,12 +9,11 @@ namespace School.Areas.Teacher.ViewModels
         public int GroupId { get; set; }
         public int TeacherId { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
         public int StartHour { get; set; }
         public int StartMinute { get; set; }
         public int EndHour { get; set; }
         public int EndMinute { get; set; }
         public string Name { get; set; }
-        public string File_Name { get; set; }
+        public string FileName { get; set; }
     }
 }

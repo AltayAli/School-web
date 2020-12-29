@@ -1,5 +1,5 @@
-﻿using DevExtreme.AspNet.Data;
-using DevExtreme.AspNet.Data.ResponseModel;
+﻿using DevExtreme.AspNet.Data.ResponseModel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using School.Areas.Extensions;
 using School.Areas.Teacher.Services;
@@ -21,8 +21,9 @@ namespace School.Areas.Teacher.Controllers
         {
             return View();
         }
-        public LoadResult GetList(DevxLoadOptions options,int lessonId,int teacherid)
-        => _services.LessonService.GetList(options,lessonId,teacherid);
+        [HttpGet("{groupId}")]
+        public LoadResult GetList(DevxLoadOptions options,[FromRoute]int groupId)
+        => _services.LessonService.GetList(options,groupId, HttpContext.Session.GetInt32("id").Value);
         public IActionResult Create()
         {
             return View();
@@ -32,6 +33,7 @@ namespace School.Areas.Teacher.Controllers
         {
             try
             {
+                model.TeacherId = HttpContext.Session.GetInt32("id").Value;
                 _services.LessonService.Create(model);
                 return Created("", new object());
             }
@@ -40,36 +42,41 @@ namespace School.Areas.Teacher.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        //[HttpGet("{id}")]
-        //public IActionResult Update([FromRoute] int id)
-        //{
-        //    return View(_services.UsersServices.Get(id));
-        //}
-        //[HttpPut("{id}")]
-        //public IActionResult Update([FromRoute] int id, [FromBody] UserViewModel model)
-        //{
-        //    try
-        //    {
-        //        _services.UsersServices.Update(id, model);
-        //        return Created("", new object());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-        //[HttpDelete("{id}")]
-        //public IActionResult Delete([FromRoute] int id)
-        //{
-        //    try
-        //    {
-        //        _services.UsersServices.Delete(id);
-        //        return Created("", new object());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+
+        [HttpGet("{id}")]
+        public IActionResult Update([FromRoute] int id)
+        {
+            return View(_services.LessonService.Get(id));
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update([FromRoute] int id, [FromBody] LessonViewModel model)
+        {
+            try
+            {
+                model.TeacherId = HttpContext.Session.GetInt32("id").Value;
+                _services.LessonService.Update(id, model);
+                return Created("", new object());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromQuery] int lessonId,[FromQuery] int groupId)
+        {
+            try
+            {
+                var teacherId = HttpContext.Session.GetInt32("id").Value;
+                _services.LessonService.Delete(groupId,teacherId, lessonId);
+                return Created("", new object());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

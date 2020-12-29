@@ -15,14 +15,31 @@ namespace School.Areas.Teacher.Services
         {
             _repo = repo;
         }
-        public LoadResult GetList(DevxLoadOptions options,int grouId,int teacherId)
-        => DataSourceLoader.Load(_repo.LessonsRepo.GetList(grouId, teacherId), options);
+        public LoadResult GetList(DevxLoadOptions options,int groupId,int teacherId)
+        => DataSourceLoader.Load(_repo.LessonsRepo.GetList(groupId, teacherId), options);
+
+
+        public LessonViewModel Get(int id)
+        {
+            var model = _repo.LessonsRepo.Get(id);
+            return new LessonViewModel
+            {
+                Name = model.Name,
+                EndHour = model.EndDate.Hour,
+                EndMinute = model.EndDate.Minute,
+                FileName = model.File_Name,
+                StartDate = model.StartDate,
+                StartHour = model.StartDate.Hour,
+                StartMinute = model.StartDate.Minute
+            };
+        }
+        
         public void Create(LessonViewModel model)
         {
             var lessonId = _repo.LessonsRepo.Create(new Lesson { 
-                StartDate = model.StartDate,
-                EndDate = model.EndDate,
-                File_Name = model.File_Name,
+                StartDate = new DateTime(model.StartDate.Year,model.StartDate.Month,model.StartDate.Day,model.StartHour,model.StartMinute,0),
+                EndDate = new DateTime(model.StartDate.Year, model.StartDate.Month, model.StartDate.Day, model.EndHour, model.EndMinute, 0),
+                File_Name = model.FileName,
                 Name = model.Name,
             });
 
@@ -50,10 +67,27 @@ namespace School.Areas.Teacher.Services
             }
 
         }
-
-        public void Delete(int groupId, int teacherId)
+        public void Update(int lessonId,LessonViewModel model)
         {
-            throw new NotImplementedException();
+            _repo.LessonsRepo.Update(lessonId, new Lesson
+            {
+                StartDate = new DateTime(model.StartDate.Year, model.StartDate.Month, model.StartDate.Day, model.StartHour, model.StartMinute, 0),
+                EndDate = new DateTime(model.StartDate.Year, model.StartDate.Month, model.StartDate.Day, model.EndHour, model.EndMinute, 0),
+                File_Name = model.FileName,
+                Name = model.Name,
+            });
+        }
+
+        public void Delete(int groupId, int teacherId,int lessonId)
+        {
+            _repo.LessonsRepo.Delete(lessonId);
+            var gt = _repo.GroupTeachersRepo.GetGroupTeacherId(groupId, teacherId);
+            var gtl = _repo.GroupTeacherLessonsRepo.Delete(gt, lessonId);
+            var journalIds = _repo.GroupJournalsRepo.Delete(gtl);
+            foreach (var id in journalIds)
+            {
+                _repo.JournalsRepo.Delete(id);
+            }
         }
 
         public void EndLesson(int groupId, int teacherId)
@@ -61,9 +95,5 @@ namespace School.Areas.Teacher.Services
             throw new NotImplementedException();
         }
 
-        public void Update(LessonViewModel models)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -5,11 +5,12 @@ using School.Areas.Extensions;
 using School.Datas;
 using School.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace School.Areas.Teacher.Repositories
 {
-    public class GroupJournalsRepository : IBaseRepository<GroupJournal>
+    public class GroupJournalsRepository : IGroupJournalRepository
     {
         private readonly DataContext _context;
         public GroupJournalsRepository(DataContext context)
@@ -41,15 +42,20 @@ namespace School.Areas.Teacher.Repositories
             updatedModel.JournalID = model.JournalID;
             _context.SaveChanges();
         }
-        public void Delete(int id)
+        public List<int> Delete(int groupTeacherLessonId)
         {
-            if (!Exists(id))
-                throw new Exception("Məlumat tapılmadı!");
-
-            _context.GroupJournals.Remove(_context.GroupJournals.FirstOrDefault(x => x.Id == id));
+            var models = _context.GroupJournals.Where(x => x.GroupTeacherLessonId == groupTeacherLessonId);
+            var journalsId = models.Select(x => x.JournalID).ToList();
+            _context.GroupJournals.RemoveRange(models);
             _context.SaveChanges();
+            return journalsId;
         }
         private bool Exists(int id)
             => _context.GroupJournals.Any(x => x.Id == id);
+
+        void IBaseRepository<GroupJournal>.Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

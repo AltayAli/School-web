@@ -27,5 +27,14 @@ namespace School.Areas.Teacher.Services
                 return _groupsService;
             }
         }
+        private IJournalService _journalService;
+        public IJournalService JournalService
+        {
+            get
+            {
+                _journalService ??= new JournalService(_repo);
+                return _journalService;
+            }
+        }
     }
 }

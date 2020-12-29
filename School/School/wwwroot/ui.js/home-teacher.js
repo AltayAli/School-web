@@ -11,14 +11,12 @@ $(function () {
                         <div class="row" id = "body-content">
                         </div>
                 `)
-
+   //a href="javascript:void(0)" id="${items["id"]}"
     Model.SendRequest(`/teacher/home/getgroups`, "GET")
         .then((items) => {
             for (var item of items) {
-                console.log(item["name"])
                 $("#body-content").append(`
-                    <a href="#">
-                        <div class="col-12">
+                        <div class="lessons col-12 col-sm-6 col-md-4 col-lg-3" id="${item["id"]}" data-id="${item["id"]}" data-url="/teacher/lessons/index">
 						    <div class="card card-body bg-${colors[Math.floor(Math.random() * colors.length)]} has-bg-image">
 							    <div class="media">
 								    <div class="mr-3 align-self-center">
@@ -32,8 +30,13 @@ $(function () {
 							    </div>
 						    </div>
 					    </div>
-                    </a>
                 `)
+                var i = item["id"]
+
+                $(`#${i}`).on("click", function (e) {
+                    sessionStorage.setItem("l", this.id)
+                   window.location.href = $(`#${i}`).data("url");
+                });
             }
         });
 

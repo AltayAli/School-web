@@ -8,7 +8,7 @@ namespace School.Areas.Teacher.Repositories
     public interface ILessonRepository 
     {
         List<Lesson> GetList(int groupId, int teacherId);
-
+        Lesson Get(int id);
         LoadResult GetDevextremeList(DevxLoadOptions options);
      
         int Create(Lesson model);

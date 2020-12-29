@@ -20,7 +20,8 @@ namespace School.Areas.Teacher.Repositories
 
         public LoadResult GetDevextremeList(DevxLoadOptions options)
             => DataSourceLoader.Load(_context.Lessons, options);
-
+        public Lesson Get(int id)
+            => _context.Lessons.FirstOrDefault(x => x.Id==id);
         public List<Lesson> GetList(int groupId, int teacherId)
             => (from gtl in _context.GroupTeacherLessons
                 join gt in _context.GroupTeachers
@@ -28,8 +29,8 @@ namespace School.Areas.Teacher.Repositories
                 where gt.GroupID == groupId && gt.TeacherID == teacherId
                 join l in _context.Lessons
                 on gtl.LessonId equals l.Id
-                join gj in _context.GroupJournals
-                on gtl.Id equals gj.GroupTeacherLessonId
+                //join gj in _context.GroupJournals
+                //on gtl.Id equals gj.GroupTeacherLessonId
                 select l).ToList();
         public int Create(Lesson model)
         { 

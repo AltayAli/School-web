@@ -11,8 +11,8 @@ namespace School.Areas.Teacher.Repositories
             _context = context;
         }
 
-        private IBaseRepository<GroupJournal> _groupJournalsRepository;
-        public IBaseRepository<GroupJournal> GroupJournalsRepo
+        private IGroupJournalRepository _groupJournalsRepository;
+        public IGroupJournalRepository GroupJournalsRepo
         {
             get
             {
@@ -21,8 +21,8 @@ namespace School.Areas.Teacher.Repositories
             }
         }
 
-        private IBaseRepository<GroupTeacherLesson> _groupTeacherLessonsRepository;
-        public IBaseRepository<GroupTeacherLesson> GroupTeacherLessonsRepo
+        private IGroupTeacherLessonsRepository _groupTeacherLessonsRepository;
+        public IGroupTeacherLessonsRepository GroupTeacherLessonsRepo
         {
             get
             {
@@ -31,8 +31,8 @@ namespace School.Areas.Teacher.Repositories
             }
         }
 
-        private IBaseRepository<Journal> _journalsRepository;
-        public IBaseRepository<Journal> JournalsRepo
+        private IJournalsRepository _journalsRepository;
+        public IJournalsRepository JournalsRepo
         {
             get
             {

@@ -11,6 +11,9 @@ a.navbar-brand {
 a {
   color: #0366d6;
 }
+.lessons :hover{
+    cursor:pointer;
+}
 #form-avatar {
     height: 128px;
     width: 128px;

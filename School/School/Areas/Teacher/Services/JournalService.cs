@@ -2,18 +2,19 @@
 using DevExtreme.AspNet.Data.ResponseModel;
 using School.Areas.Extensions;
 using School.Areas.Teacher.Repositories;
+using System.Collections.Generic;
 
 namespace School.Areas.Teacher.Services
 {
-    public class GroupsService : IGroupsService
+    public class JournalService : IJournalService
     {
         private readonly IRepository _repo;
-        public GroupsService(IRepository repo)
+        public JournalService(IRepository repo)
         {
             _repo = repo;
         }
 
-        public LoadResult GetGroupsListByTeacherId(DevxLoadOptions options, int teacherId)
-        => DataSourceLoader.Load(_repo.GroupsRepo.GetGroupsList(teacherId), options);
+        public List<dynamic> GetJournal(int groupId, int teacherId)
+        => _repo.JournalsRepo.GetJournal(groupId, teacherId);
     }
 }

@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace School.Areas.Teacher.Repositories
 {
-    public class GroupTeacherLessonsRepository : IBaseRepository<GroupTeacherLesson>
+    public class GroupTeacherLessonsRepository : IGroupTeacherLessonsRepository
     {
         private readonly DataContext _context;
         public GroupTeacherLessonsRepository(DataContext context)
@@ -43,16 +43,22 @@ namespace School.Areas.Teacher.Repositories
 
         }
 
-        public void Delete(int id)
+        public int Delete(int grouTecherId,int lessonId)
         {
-            if (!Exists(id))
-                throw new Exception("Məlumat tapılmadı!");
-
-            _context.GroupTeacherLessons.Remove(_context.GroupTeacherLessons.FirstOrDefault(x => x.Id == id));
+            var model = _context.GroupTeacherLessons.FirstOrDefault(x => x.GroupTeacherId == grouTecherId && x.LessonId == lessonId);
+            int id = model.Id;
+            _context.GroupTeacherLessons
+                            .Remove(model);
             _context.SaveChanges();
+
+            return  id;
         }
         private bool Exists(int id)
             => _context.GroupTeacherLessons.Any(x => x.Id == id);
 
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿let Model = {
     SendRequest: function (url, method, showStatus,obj) {
         var d = $.Deferred();
-
+        console.log(obj)
         method = method || "GET";
         $.ajax(url, {
             method: method || "GET",
