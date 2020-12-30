@@ -98,7 +98,7 @@ $(function () {
         }
     }
 
-    $("#detail-link").attr("href", `/teacher/journals/index/${sessionStorage.getItem("l")}`);
+    $("#detail-link").attr("href", `/teacher/journals/index`);
     $("#create-link").attr("href", `/teacher/lessons/create`);
 });
 
