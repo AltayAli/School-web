@@ -77,5 +77,38 @@ namespace School.Areas.Teacher.Repositories
         }
         private bool Exists(int id)
             => _context.Journals.Any(x => x.Id == id);
+
+        public void Update(int studentid, DateTime date, string score)
+        {
+            var model = _context.Journals.FirstOrDefault(x => x.Student_Id == studentid &&
+                                                            x.Date == date);
+            var lesson = (from j in _context.Journals
+                     join u in _context.Users
+                     on j.Student_Id equals u.Id
+                     where u.Role == Enums.Roles.Student
+                     join gj in _context.GroupJournals
+                     on j.Id equals gj.JournalID
+                     join gtl in _context.GroupTeacherLessons
+                     on gj.GroupTeacherLessonId equals gtl.Id
+                     join gt in _context.GroupTeachers
+                     on gtl.GroupTeacherId equals gt.Id
+                     join l in _context.Lessons
+                     on gtl.LessonId equals l.Id
+                     where j.Student_Id == studentid && j.Date == date
+                     select new
+                     {
+                         l.StartDate,
+                         l.EndDate
+                     }).FirstOrDefault();
+            if (model==null)
+                throw new Exception("Məlumat tapılmadı!");
+            
+            if (date<=lesson.StartDate&&date>=lesson.EndDate)
+                throw new Exception("Qiyməyi dəyişdirməyə icazəniz yoxdur!");
+
+            _context.Entry(model).State = EntityState.Modified;
+            model.Score = score;
+            _context.SaveChanges();
+        }
     }
 }

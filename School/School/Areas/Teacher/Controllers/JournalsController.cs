@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using School.Areas.Extensions;
 using School.Areas.Teacher.Services;
+using School.Areas.Teacher.ViewModels;
+using System;
 
 namespace School.Areas.Teacher.Controllers
 {
@@ -25,5 +27,19 @@ namespace School.Areas.Teacher.Controllers
         => DataSourceLoader.Load(_services.JournalService
                                         .GetJournal(options, groupId, HttpContext.Session.GetInt32("id").Value)
                                         ,options);
+        [HttpPut("{studentId}")]
+        public IActionResult Update([FromRoute]int studentId,[FromBody] ScoreViewModel model)
+        {
+            try
+            {
+
+                _services.JournalService.Update(studentId, model);
+                return Created("", new object());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

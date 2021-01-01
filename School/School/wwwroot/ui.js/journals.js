@@ -13,13 +13,37 @@ $(function () {
                 var obj = {
                     dataField: `${name}`,
                     caption: name == "Name" ? "Ad" : name,
-                    allowEditing: name != "Name",
+                    allowEditing: name != "Name" ,
                     validationRules: [{ type: "required" }],
                     visible: name != "Id",
                     fixed: name == "Name",
-                    width: name == "Name" ? 200 : 80
+                    width: name == "Name" ? 200 : 100
                 };
-                if (name!="Id"&&name!="Name") {
+                if (name != "Id" && name != "Name") {
+                    let months = {
+                        "Jan":0,
+                        "Feb":1,
+                        "Mar":2,
+                        "Apr":3,
+                        "May":4,
+                        "Jun":5,
+                        "Jul":6,
+                        "Aug":7,
+                        "Sep":8,
+                        "Oct":9,
+                        "Nov":10,
+                        "Dec":11,
+                    }
+                    let day = parseInt(name.substring(0, 2));
+                    let year = parseInt(name.substring(5, 9));
+                    let hour = parseInt(name.substring(9, 11));
+                    let minute = parseInt(name.substring(11));
+                    let month = months[name.substring(2, 5)];
+                    var startDate = new Date( year, month, day, hour, minute);
+                    var endDate = new Date( year, month, day, hour+5, minute);
+                    var now = new Date();
+
+                    obj["allowEditing"] = startDate.getTime() >= now.getTime() && startDate.getTime() <= endDate.getTime();
                     obj["lookup"] = {
                         dataSource: [
                             { 'ID': '1', "Name": "1" },
@@ -49,13 +73,23 @@ $(function () {
                         return array;
                     },
                     insert: function (values) {
-                        console.log(values)
                         return Model.SendRequest("/admin/groupteachers/create", "POST", true, JSON.stringify(values));
                     },
                     update: function (key, values) {
-                        console.log(key);
-                        console.log(values);
-                        return Model.SendRequest("/admin/groupteachers/update/" + key, "PUT", true, JSON.stringify(values));
+                        var object = {};
+                        for (var i in values) {
+                            object["date"] = i.toString();
+                            object["score"] = values[i];
+                        }
+                        for (var i in array) {
+                            if (array[i]["Id"] == key) {
+
+                                array[i][object["date"]] = object["score"];
+                                break;
+                            }
+                        }
+                        console.log(array);
+                        return Model.SendRequest("/teacher/journals/update/" + key, "PUT", true, JSON.stringify(object));
                     },
                     remove: function (key) {
                         return Model.SendRequest("/admin/groupteachers/delete/" + key, "DELETE", true);
@@ -72,9 +106,9 @@ $(function () {
                 showBorders: true,
                 columns: column,
                 paging: false,
-                //onEditCanceled: function (e) {
-                //    console.log(e)
-                //},
+                onUpdated: function (e) {
+                    console.log(e)
+                },
                 //onEditCanceling: function (e) {
                 //    console.log(e)
                 //}

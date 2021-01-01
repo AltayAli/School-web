@@ -73,7 +73,6 @@ $(function () {
             validationRules: [{ type: "required" }]
             }, {
                 cellTemplate: function (container, options) {
-                    console.log(container, options);
                     $("<div>")
                         .append($(`<a href="/lessons/${options.data["file_Name"]}" class="btn" download="${options.data["file_Name"]}"><i class="icon-download"></i>Mühazirəni yüklə</a>`))
                         .appendTo(container);
