@@ -20,7 +20,7 @@ namespace School.Middlewares
             {
                 var role = context.Session.GetString("role");
                 bool mustChangePassword = Convert.ToBoolean(context.Session.GetString("must_change_password"));
-                if (context.Request.Path!="/"&&context.Request.Path!=_loginUrl&& context.Request.Path != "/account/changepassword")
+                if (context.Request.Path!="/"&&context.Request.Path!=_loginUrl&& context.Request.Path != "/account/changepassword"&& context.Request.Path != "/account/settings")
                 {
                     if (role == null)
                         context.Response.Redirect(_loginUrl);

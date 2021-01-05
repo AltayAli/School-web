@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using School.Services;
 using School.ViewModels;
+using System;
 
 namespace School.Controllers
 {
@@ -40,6 +42,24 @@ namespace School.Controllers
             var role = _service.ChangePassword(model);
             var redirectUrl = role == "" ? "/" : $"/{role}/home";
             return Redirect(redirectUrl);
+        }
+        public IActionResult Settings()
+        {
+            return View(_service.GetUser());
+        }
+        [HttpPost]
+        public IActionResult Settings([FromBody]UserViewModel model)
+        {
+
+            try
+            {
+                _service.Update(model);
+                return Ok(new { });
+            }
+            catch 
+            {
+                return BadRequest("Yanlışlıq oldu. Yenidən yoxlayın. Problem yarandıqda administratora müraciıt edin!");
+            }
         }
     }
 }

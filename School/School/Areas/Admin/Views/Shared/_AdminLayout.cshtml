@@ -3,6 +3,7 @@
 
 @{
     string fullName = HttpContextAccessor.HttpContext.Session.GetString("full_name") ?? "";
+    string profilePhoto = HttpContextAccessor.HttpContext.Session.GetString("photo_url") ?? "";
 }
 
 <!DOCTYPE html>
@@ -70,7 +71,7 @@
     <div class="navbar navbar-expand-md navbar-dark">
         <div class="navbar-brand wmin-200 ml-4">
             <a href="/forms/index/home" class="d-inline-block">
-                <img src="~/images/logo-white.png" style="transform:scale(3)" alt="">
+                <img src="~/images/logo-white.png" style="transform:scale(2)" alt="">
             </a>
         </div>
 
@@ -89,12 +90,12 @@
 
                 <li class="nav-item dropdown dropdown-user">
                     <a href="#" class="navbar-nav-link d-flex align-items-center" data-toggle="dropdown">
-                        <img src="~/images/blank-profile.png" class="rounded-circle mr-2" height="34" alt="">
+                        <img src="~/users/@profilePhoto" class="rounded-circle mr-2" height="34" alt="">
                         @fullName
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="/account/logout" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
+                        <a href="/account/settings" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
                         <a asp-controller="account" asp-action="logout" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
                     </div>
                 </li>
