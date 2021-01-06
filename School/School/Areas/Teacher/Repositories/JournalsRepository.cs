@@ -7,7 +7,6 @@ using School.Datas;
 using School.Models;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 
 namespace School.Areas.Teacher.Repositories

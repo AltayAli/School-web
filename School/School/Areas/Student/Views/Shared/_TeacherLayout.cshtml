@@ -1,0 +1,139 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    string fullName = HttpContextAccessor.HttpContext.Session.GetString("full_name") ?? "";
+    string profilePhoto = HttpContextAccessor.HttpContext.Session.GetString("photo_url") ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewData["Title"]</title>
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="~/css/icons/icomoon/styles.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/icons/material/styles.min.css" rel="stylesheet" type="text/css">
+
+
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/layout.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/components.min.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/colors.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/site.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+
+
+    @RenderSection("Styles", required: false)
+
+    <!-- Core JS files -->
+    <script src="~/js/main/jquery.min.js"></script>
+    <script src="~/js/main/bootstrap.bundle.min.js"></script>
+    <script src="~/js/plugins/loaders/blockui.min.js"></script>
+    <!-- /core JS files -->
+    <!-- Theme JS files -->
+    <script src="~/js/plugins/visualization/d3/d3.min.js"></script>
+    <script src="~/js/plugins/visualization/d3/d3_tooltip.js"></script>
+    <script src="~/js/plugins/forms/styling/switchery.min.js"></script>
+    <script src="~/js/plugins/ui/moment/moment.min.js"></script>
+    <script src="~/js/plugins/pickers/daterangepicker.js"></script>
+
+    <script src="https://kit.fontawesome.com/5d3d34fe4b.js" crossorigin="anonymous"></script>
+    <!-- /core JS files -->
+    <!-- Theme JS files -->
+    <script src="~/assets/js/app.js"></script>
+    <script src="~/js/demo_pages/dashboard.js"></script>
+    <script src="~/js/demo_charts/pages/dashboard/light/streamgraph.js"></script>
+    <script src="~/js/demo_charts/pages/dashboard/light/sparklines.js"></script>
+    <script src="~/js/demo_charts/pages/dashboard/light/lines.js"></script>
+    <script src="~/js/demo_charts/pages/dashboard/light/areas.js"></script>
+    <script src="~/js/demo_charts/pages/dashboard/light/donuts.js"></script>
+    <script src="~/js/demo_charts/pages/dashboard/light/bars.js"></script>
+    <script src="~/js/demo_charts/pages/dashboard/light/progress.js"></script>
+    <script src="~/js/demo_charts/pages/dashboard/light/heatmaps.js"></script>
+    <script src="~/js/demo_charts/pages/dashboard/light/pies.js"></script>
+    <script src="~/js/demo_charts/pages/dashboard/light/bullets.js"></script>
+    <!-- /theme JS files -->
+
+
+
+    @RenderSection("Scripts", required: false)
+</head>
+
+<body>
+
+    <!-- Main navbar -->
+    <div class="navbar navbar-expand-md navbar-dark">
+        <div class="navbar-brand wmin-200 ml-4">
+            <a href="/forms/index/home" class="d-inline-block">
+                <img src="~/images/logo-white.png" style="transform:scale(2)" alt="">
+            </a>
+        </div>
+
+        <div class="d-md-none">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
+                <i class="icon-tree5"></i>
+            </button>
+            <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+                <i class="icon-paragraph-justify3"></i>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-mobile">
+
+            <ul class="navbar-nav ml-md-auto mr-md-3">
+
+                <li class="nav-item dropdown dropdown-user">
+                    <a href="#" class="navbar-nav-link d-flex align-items-center" data-toggle="dropdown">
+                        <img src="~/users/@profilePhoto" class="rounded-circle mr-2" height="34" alt="">
+                        @fullName
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="/account/settings" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
+                        <a asp-controller="account" asp-action="logout" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /main navbar -->
+    <!-- Page content -->
+    <div class="page-content">
+
+        <!-- Main sidebar -->
+        @*<partial name="_Sidebar" />*@
+        <!-- /main sidebar -->
+        <!-- Main content -->
+        <div class="content-wrapper">
+            <!-- Content area -->
+            <div class="content">
+                @RenderSection("Header", false)
+                @RenderBody()
+
+            </div>
+            <!-- /content area -->
+
+        </div>
+        <!-- /main content -->
+
+    </div>
+    <!-- /page content -->
+    <!-- Footer -->
+    <div class="navbar navbar-expand-lg navbar-light">
+        <div class="text-center d-lg-none w-100">
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-footer">
+                © ADNSU
+            </button>
+        </div>
+    </div>
+    <!-- /footer -->
+
+</body>
+
+</html>

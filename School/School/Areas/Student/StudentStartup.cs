@@ -2,13 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using School.Areas.Teacher.Repositories;
-using School.Areas.Teacher.Services;
+using School.Areas.Student.Services;
 using School.Datas;
 
 
-[assembly: HostingStartup(typeof(School.Areas.Teacher.StudentStartup))]
-namespace School.Areas.Teacher
+[assembly: HostingStartup(typeof(School.Areas.Student.StudentStartup))]
+namespace School.Areas.Student
 {
     public class StudentStartup : IHostingStartup
     {
@@ -18,7 +17,7 @@ namespace School.Areas.Teacher
             {
                 services.AddDbContext<DataContext>(x => x.UseSqlServer(context.Configuration.GetConnectionString("DataContext")));
 
-                services.AddScoped<IRepository, Repository>();
+
                 services.AddScoped<IServices, Services.Services>();
             });
         }
