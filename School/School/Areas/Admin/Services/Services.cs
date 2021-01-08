@@ -1,4 +1,5 @@
 ﻿using School.Areas.Admin.Repositories;
+using System.Collections.Generic;
 
 namespace School.Areas.Admin.Services
 {
@@ -36,6 +37,11 @@ namespace School.Areas.Admin.Services
                 _groupTeachersServices ??= new GroupTeachersService(_repo);
                 return _groupTeachersServices;
             }
+        }
+
+        public Dictionary<string, int> GetSummary
+        {
+            get => _repo.GetSummary;
         }
     }
 }

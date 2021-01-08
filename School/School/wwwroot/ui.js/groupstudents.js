@@ -23,10 +23,10 @@ $(function () {
         },
         columns: [{
             dataField: "groupName",
-            caption: "Group name",
+            caption: "Qrup adı",
         }, {
             dataField: "studentsCount",
-            caption: "Student count",
+            caption: "Tələbələrin sayı",
         }],
         paging: {
             pageSize: 10
@@ -37,7 +37,7 @@ $(function () {
             showInfo: true
         }
     });
-    $("#title").html("Grouplar & Tələbələr");
+    $("#title").html("Qruplar & Tələbələr");
 
     function selection_changed(data) {
         if (data) {

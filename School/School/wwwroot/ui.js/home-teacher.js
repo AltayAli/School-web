@@ -1,6 +1,6 @@
 ﻿import Model from "./general.js"
 $(function () {
-    $("#title").html("Home page");
+    $("#title").html("Ana səhifə");
     $("#create-link").hide()
     $("#edit-link").hide()
     $("#detail-link").hide();

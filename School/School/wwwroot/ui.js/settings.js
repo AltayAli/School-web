@@ -54,18 +54,21 @@ let FormCreater = {
                         colCount: 2,
                         items: [{
                             dataField: "name",
+                            label: { text: "Ad" },
                             validationRules: [{
                                 type: "required",
                                 message: "Ad daxil edilməlidir!"
                             }],
                         }, {
                             dataField: "surname",
+                            label: { text: "Soyad" },
                             validationRules: [{
                                 type: "required",
                                 message: "Soyad daxil edilməlidir!"
                             }],
                             }, {
                                 dataField: "password",
+                                label: { text: "Parol" },
                                 editorOptions: {
                                     mode: "password"
                                 },
@@ -75,7 +78,7 @@ let FormCreater = {
                                 }]
                             }, {
                                 label: {
-                                    text: "Confirm Password"
+                                    text: "Parolun təkrarı"
                                 },
                                 editorType: "dxTextBox",
                                 editorOptions: {

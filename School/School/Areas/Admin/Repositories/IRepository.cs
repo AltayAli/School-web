@@ -1,4 +1,5 @@
 ﻿using School.Models;
+using System.Collections.Generic;
 
 namespace School.Areas.Admin.Repositories
 {
@@ -11,5 +12,6 @@ namespace School.Areas.Admin.Repositories
         IBaseRepository<Journal> JournalsRepo { get; }
         IBaseRepository<Lesson> LessonsRepo { get; }
         IUsersRepository UsersRepo { get; }
+        Dictionary<string, int> GetSummary { get; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿import Model from "./general.js"
 $(function () {
-    $("#title").html("List of groups")
+    $("#title").html("Dərslər")
     $("#body").dxDataGrid({
         dataSource: new DevExpress.data.CustomStore({
             key: "id",
@@ -39,7 +39,7 @@ $(function () {
             validationRules: [{ type: "required" }]
         }, {
             dataField: "name",
-            caption: "Name",
+            caption: "Ad",
             formItem: {
                 colSpan: 2,
             },

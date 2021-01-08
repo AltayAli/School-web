@@ -1,5 +1,8 @@
 ﻿using School.Datas;
+using School.Enums;
 using School.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace School.Areas.Admin.Repositories
 {
@@ -9,6 +12,21 @@ namespace School.Areas.Admin.Repositories
         public Repository(DataContext context)
         {
             _context = context;
+        }
+        public Dictionary<string, int> GetSummary
+        {
+            get
+            {
+                Dictionary<string, int> summary = new Dictionary<string, int>();
+
+                summary.Add("Qruplar", _context.Groups.Count());
+                summary.Add("Adminlər", _context.Users.Where(x => x.Role == Roles.Admin).Count());
+                summary.Add("Müəllimlər", _context.Users.Where(x => x.Role == Roles.Teacher).Count());
+                summary.Add("Tələbələr", _context.Users.Where(x => x.Role == Roles.Student).Count());
+
+
+                return summary;
+            }
         }
         private IGroupsRepository _groupsRepository;
         public IGroupsRepository GroupsRepo
@@ -79,6 +97,5 @@ namespace School.Areas.Admin.Repositories
                 return _usersRepository;
             }
         }
-
     }
 }

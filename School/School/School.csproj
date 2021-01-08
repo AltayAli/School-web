@@ -26,6 +26,7 @@
     <Folder Include="Areas\Student\Data\" />
     <Folder Include="Areas\Student\Models\" />
     <Folder Include="Areas\Teacher\Data\" />
+    <Folder Include="wwwroot\lessons\" />
   </ItemGroup>
 
   <ItemGroup>

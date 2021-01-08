@@ -1,18 +1,17 @@
 ﻿using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
 using Microsoft.AspNetCore.Mvc;
-using School.Areas.Admin.Services;
 using School.Areas.Extensions;
+using School.Areas.Student.Services;
 
-namespace School.Areas.Admin.Controllers
+namespace School.Areas.Student.Controllers
 {
-
-    [Area("Admin")]
+    [Area("Student")]
     [Route("[area]/[controller]/{action=Index}")]
-    public class HomeController : Controller
+    public class LessonsController : Controller
     {
         private readonly IServices _services;
-        public HomeController(IServices services)
+        public LessonsController(IServices services)
         {
             _services = services;
         }
@@ -21,7 +20,7 @@ namespace School.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
-        public LoadResult GetSummary(DevxLoadOptions options)
-            => DataSourceLoader.Load(_services.GetSummary,options);
+        public LoadResult GetList(DevxLoadOptions options)
+        => DataSourceLoader.Load(_services.GetLessonsList(),options);
     }
 }

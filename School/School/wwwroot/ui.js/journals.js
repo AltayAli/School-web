@@ -1,6 +1,6 @@
 ﻿import Model from "./general.js"
 $(function () {
-    $("#title").html("List of groups")
+    $("#title").html("Jurnal")
     $("#create-link").hide()
     $("#edit-link").hide()
     $("#detail-link").hide();

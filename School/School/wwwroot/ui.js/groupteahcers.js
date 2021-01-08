@@ -65,7 +65,7 @@ $(function () {
             validationRules: [{ type: "required" }]
         }, {
             dataField: "groupid",
-            caption: "Group name",
+            caption: "Qrup adı",
             lookup: {
                 dataSource: DevExpress.data.AspNet.createStore({
                     key: "id",
@@ -80,7 +80,7 @@ $(function () {
             validationRules: [{ type: "required" }]
         },{
             dataField: "teacherid",
-            caption: "Teacher name",
+            caption: "Müəllim adı",
             lookup: {
                 dataSource: DevExpress.data.AspNet.createStore({
                     key: "id",
