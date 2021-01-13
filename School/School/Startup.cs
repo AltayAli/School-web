@@ -35,6 +35,7 @@ namespace School
             services.AddControllersWithViews();
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<IFilesRepository, FilesRepository>();
+            services.AddScoped<IMessageService, MessageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

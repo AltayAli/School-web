@@ -3,6 +3,7 @@ using DevExtreme.AspNet.Data.ResponseModel;
 using School.Areas.Admin.Repositories;
 using School.Areas.Admin.ViewModels;
 using School.Areas.Extensions;
+using School.Extensions;
 using School.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,7 @@ namespace School.Areas.Admin.Services
         => _repo.UsersRepo.Create(new User
         {
             Name = model.Name,
-            Password = $"{model.Name}123",
+            Password = $"{model.Name}123".CreatePassword(),
             PhotoURL = model.PhotoURL,
             Role = model.Role,
             Surname = model.Surname,
