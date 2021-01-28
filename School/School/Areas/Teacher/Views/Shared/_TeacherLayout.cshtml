@@ -20,12 +20,15 @@
     <link href="~/css/icons/material/styles.min.css" rel="stylesheet" type="text/css">
 
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.1/css/bulma.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/layout.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/components.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/colors.min.css" rel="stylesheet" type="text/css">
     <link href="~/css/site.css" rel="stylesheet" type="text/css">
+
     <link href="~/css/message.css" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
 
@@ -101,9 +104,9 @@
                         <span class="d-md-none ml-2">Messages</span>
                         <span class="badge badge-pill badge-mark bg-orange-400 border-orange-400 ml-auto ml-md-0"></span>
                     </a><div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
-                        <div class="dropdown-content-header">
+                        <div class="dropdown-content-header" id="show-users-list">
                             <span class="font-weight-semibold">Messages</span>
-                            <a href="#" class="text-default"><i class="icon-compose"></i></a>
+                            <a class="text-default"><i class="icon-compose"></i></a>
                         </div>
 
                         <div class="dropdown-content-body dropdown-scrollable">
@@ -163,6 +166,7 @@
     </div>
     <!-- /footer -->
 
+    <div id="chatApp"></div>
 </body>
 
 </html>

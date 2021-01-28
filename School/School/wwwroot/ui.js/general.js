@@ -9,6 +9,7 @@
             dataType: "json",
             cache: false
         }).done(function (result) {
+
             d.resolve(method === "GET"  ? result.data : result);
             if (showStatus)
                 DevExpress.ui.notify({ message: "Əməliyyat uğurludur!" }, "success", 2000);

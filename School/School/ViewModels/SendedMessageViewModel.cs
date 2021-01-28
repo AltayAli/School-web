@@ -1,8 +1,10 @@
-﻿namespace School.ViewModels
+﻿using System;
+
+namespace School.ViewModels
 {
     public class SendedMessageViewModel
     {
-        public string Context { get; set; }
+        public string Content { get; set; }
         public int To { get; set; }
     }
 }

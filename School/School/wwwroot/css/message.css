@@ -6,7 +6,6 @@
     .allUsersList .card-header {
         background: #683db8;
         color: #FFF;
-        padding: 10px;
     }
 
     .allUsersList .image img {
@@ -21,6 +20,10 @@
     right: 360px;
 }
 
+.usersChatList .card-header-title{
+    padding:0;
+    margin-right:30px;
+}
 .show {
     display: block;
 }
@@ -32,9 +35,17 @@
     .thumb-user-list .image img {
         border-radius: 30px;
     }
-
+#userListBox{
+    max-height: 200px;
+    overflow-y:scroll;
+    display:block;
+}
+.card #userListBox article{
+    max-height: 40px !important;
+}
 .usersChatList .card-header {
-    background: #683db8;
+    background: #683db8 !important;
+    max-height:50px;
     font-size: 13px;
 }
 
@@ -58,11 +69,12 @@
 }
 
 .chatBox .card-header {
-    background: #683db8;
+    background: #683db8 !important;
 }
 
 .header-title {
     height: 50px;
+    padding-bottom:40px;
 }
 
 .card-header-title i {
@@ -182,7 +194,7 @@
     float: left;
 }
 
-.chatBox .card-header-icon i {
+.card-header-icon i {
     color: #FFF;
     font-size: 13px;
 }

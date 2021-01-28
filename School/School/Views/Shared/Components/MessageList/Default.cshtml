@@ -1,15 +1,17 @@
-﻿@model List<School.ViewModels.MessageListViewModel>
-            
+﻿@using Microsoft.AspNetCore.Http;
+@model List<School.ViewModels.MessageListViewModel>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor _accessor;
+
 @foreach (var item in Model)
 {
-    <li class="media" data-id="@item.UserId">
+    <li class="media" id="media" data-id="@item.UserId" data-photo="@item.PhotoUrl" data-i="@_accessor.HttpContext.Session.GetInt32("id")" data-name="@item.UserName">
         <div class="mr-3 position-relative">
             <img src="~/users/@item.PhotoUrl" width="36" height="36" class="rounded-circle" alt="">
         </div>
 
         <div class="media-body">
             <div class="media-title">
-                <a href="#">
+                <a href="javascript:void(0)">
                     <span class="font-weight-semibold">@item.UserName</span>
                     <span class="text-muted float-right font-size-sm">@item.Messages.FirstOrDefault().Date.ToString("HH:mm")</span>
                 </a>
@@ -19,3 +21,7 @@
         </div>
     </li>
 }
+
+
+
+<script type="module" src="~/ui.js/messages.js"></script>

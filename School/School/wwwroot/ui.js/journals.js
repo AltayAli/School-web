@@ -106,9 +106,6 @@ $(function () {
                 showBorders: true,
                 columns: column,
                 paging: false,
-                onUpdated: function (e) {
-                    console.log(e)
-                },
                 //onEditCanceling: function (e) {
                 //    console.log(e)
                 //}
