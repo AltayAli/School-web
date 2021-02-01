@@ -4,7 +4,7 @@
 
 @foreach (var item in Model)
 {
-    <li class="media" id="media" data-id="@item.UserId" data-photo="@item.PhotoUrl" data-i="@_accessor.HttpContext.Session.GetInt32("id")" data-name="@item.UserName">
+    <li class="media" id="m" data-id="@item.UserId" data-photo="@item.PhotoUrl" data-i="@_accessor.HttpContext.Session.GetInt32("id")" data-name="@item.UserName">
         <div class="mr-3 position-relative">
             <img src="~/users/@item.PhotoUrl" width="36" height="36" class="rounded-circle" alt="">
         </div>

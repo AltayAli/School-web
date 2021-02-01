@@ -29,6 +29,10 @@ a {
     max-height:100%;
     max-width:100%
 }
+.user-messages{
+    max-height:400px;
+    overflow-y:scroll;
+}
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;

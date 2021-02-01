@@ -43,6 +43,9 @@
 .card #userListBox article{
     max-height: 40px !important;
 }
+.card #userListBox article :hover {
+    cursor:pointer;
+}
 .usersChatList .card-header {
     background: #683db8 !important;
     max-height:50px;

@@ -35,7 +35,7 @@ $(document).ready(() => {
 `;
     }
 
-    $("#media").click(function () {
+    $("#m").click(function () {
         $("#chatApp").append(`${GetMessage($(this).data().photo, $(this).data().name)}`);
 
         $("#close-icon").click(function(){
@@ -107,7 +107,7 @@ $(document).ready(() => {
                             <span class="tag is-primary">${result.length}</span>&nbsp;İstifadəçilər
                             </p>
                             <a class="card-header-icon mb-2 close-icon">
-                                <span id="close-icon">
+                                <span id="close">
                                     <i class="fa fa-close"></i>
                                 </span>
                             </a>
@@ -118,12 +118,12 @@ $(document).ready(() => {
                       </div>
                     </div>
                 `);
-                $("#close-icon").click(function () {
+                $("#close").click(function () {
                     $(this).parents(".usersChatList").remove();
                 });
                 for (var i in result) {
                     $(".usersChatList .card #userListBox").append(`
-                                    <article class="media" data-id="${result[i].id}">
+                                    <article class="media" data-id="${result[i].id}" data-photo="${result[i].photo}" data-name="${result[i].fullName}">
                                       <figure class="media-left">
                                         <p class="image is-32x32">
                                           <img src="/users/${result[i].photo}">
@@ -140,6 +140,67 @@ $(document).ready(() => {
                                     </article>
                             `);
                 }
+
+                $(".media").click(function () {
+                    $("#chatBox").remove();
+                    $("#chatApp").append(`${GetMessage($(this).data().photo, $(this).data().name)}`);
+
+                    $("#close-icon").click(function () {
+                        $("#chatBox").remove();
+                    });
+
+                    $("#send-message").click(() => {
+
+                        var data = {
+                            Content: $("#chatTextarea").val(),
+                            To: $(this).data().id
+                        };
+
+                        Model.SendRequest(`/messages/send`, "post", true, JSON.stringify(data))
+                            .then((result) => {
+                                $("#chatBox #chatbox-area .content").append(`
+                                    <div class="chat-message-group writer-user">
+                                        <div class="chat-messages">
+                                            <div class="message">${data.Content}</div>
+                                            <div class="from">${result.date}</div>
+                                        </div>
+                                    </div>
+                            `);
+                                $("#chatTextarea").val("");
+                            })
+                    });
+                    Model.SendRequest(`/messages/getusermessages/${$(this).data().id}`, "get")
+                        .then((items) => {
+                            for (var i in items) {
+                                for (var j = 0; j < items[i].length; j++) {
+                                    if (items[i][j].writerId == $("#m").data().i) {
+                                        $("#chatBox #chatbox-area .content").append(`
+                                    <div class="chat-message-group writer-user">
+                                        <div class="chat-messages">
+                                            <div class="message">${items[i][j]["content"]}</div>
+                                            <div class="from">${items[i][j]["date"]}</div>
+                                        </div>
+                                    </div>
+                            `);
+                                    } else {
+                                        $("#chatBox #chatbox-area .content").append(`
+                                            <div class="chat-message-group">
+                                                        <div class="chat-thumb">
+                                                            <figure class="image is-32x32">
+                                                                <img src="/users/${$(this).data().photo}">
+                                                            </figure>
+                                                        </div>
+                                                        <div class="chat-messages">
+                                                            <div class="message">${items[i][j]['content']}</div>
+                                                            <div class="from">${items[i][j]['date']}</div>
+                                                        </div>
+                                                    </div>
+                                        `)
+                                    }
+                                }
+                            }
+                        });
+                })
             })
     })
 })
