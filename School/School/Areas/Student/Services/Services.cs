@@ -118,5 +118,10 @@ namespace School.Areas.Student.Services
             on gt.GroupID equals u.Class_Id
             where u.Role == Enums.Roles.Student && u.Id == _accessor.HttpContext.Session.GetInt32("id")
             select l).ToList();
+
+        public void CreateMonitoring(MonitoringViewModel model)
+        {
+            //BUnu yazmalisan
+        }
     }
 }

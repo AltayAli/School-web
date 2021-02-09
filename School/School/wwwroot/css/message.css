@@ -13,11 +13,13 @@
     }
 
 .usersChatList {
-    position: absolute;
     width: 250px;
+    max-height: 200px;
     bottom: 0;
     margin-bottom: 0;
     right: 360px;
+    position: fixed;
+    z-index: 1000;
 }
 
 .usersChatList .card-header-title{
@@ -53,7 +55,8 @@
 }
 
 .chatBox {
-    position: absolute;
+    position: fixed;
+    z-index:1000;
     bottom: 0;
     right: 0;
     width: 300px;

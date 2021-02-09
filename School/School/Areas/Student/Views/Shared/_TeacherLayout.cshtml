@@ -20,12 +20,16 @@
     <link href="~/css/icons/material/styles.min.css" rel="stylesheet" type="text/css">
 
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.1/css/bulma.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/layout.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/components.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/colors.min.css" rel="stylesheet" type="text/css">
     <link href="~/css/site.css" rel="stylesheet" type="text/css">
+
+    <link href="~/css/message.css" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
 
 
@@ -58,8 +62,14 @@
     <script src="~/js/demo_charts/pages/dashboard/light/heatmaps.js"></script>
     <script src="~/js/demo_charts/pages/dashboard/light/pies.js"></script>
     <script src="~/js/demo_charts/pages/dashboard/light/bullets.js"></script>
-    <!-- /theme JS files -->
 
+    <script src="~/js/plugins/forms/styling/switchery.min.js"></script>
+    <script src="~/js/plugins/ui/sticky.min.js"></script>
+    <script src="~/js/plugins/ui/prism.min.js"></script>
+
+    <script src="~/js/demo_pages/navbar_multiple.js"></script>
+    <script src="~/js/demo_pages/navbar_multiple_sticky.js"></script>
+    <!-- /theme JS files -->
 
 
     @RenderSection("Scripts", required: false)
@@ -87,7 +97,28 @@
         <div class="collapse navbar-collapse" id="navbar-mobile">
 
             <ul class="navbar-nav ml-md-auto mr-md-3">
+                <li class="nav-item dropdown">
+                    <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
+                        <i class="icon-bubbles5"></i>
+                        <span class="d-md-none ml-2">Messages</span>
+                        <span class="badge badge-pill badge-mark bg-orange-400 border-orange-400 ml-auto ml-md-0"></span>
+                    </a><div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
+                        <div class="dropdown-content-header" id="show-users-list">
+                            <span class="font-weight-semibold">Messages</span>
+                            <a class="text-default"><i class="icon-compose"></i></a>
+                        </div>
 
+                        <div class="dropdown-content-body dropdown-scrollable user-messages">
+                            <ul class="media-list">
+                                @await Component.InvokeAsync("MessageList")
+                            </ul>
+                        </div>
+
+                        <div class="dropdown-content-footer justify-content-center p-0">
+                            <a href="#" class="bg-light text-grey w-100 py-2" data-popup="tooltip" title="Load more"><i class="icon-menu7 d-block top-0"></i></a>
+                        </div>
+                    </div>
+                </li>
                 <li class="nav-item dropdown dropdown-user">
                     <a href="#" class="navbar-nav-link d-flex align-items-center" data-toggle="dropdown">
                         <img src="~/users/@profilePhoto" class="rounded-circle mr-2" height="34" alt="">
@@ -134,6 +165,7 @@
     </div>
     <!-- /footer -->
 
+    <div id="chatApp"></div>
 </body>
 
 </html>

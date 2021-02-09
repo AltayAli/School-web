@@ -35,7 +35,8 @@ $(document).ready(() => {
 `;
     }
 
-    $("#m").click(function () {
+    $(".m").click(function () {
+        $("#chatBox").remove();
         $("#chatApp").append(`${GetMessage($(this).data().photo, $(this).data().name)}`);
 
         $("#close-icon").click(function(){
@@ -98,6 +99,7 @@ $(document).ready(() => {
     $("#show-users-list").click(function () {
         Model.SendRequest(`/messages/getuserslist`, "get")
             .then((result) => {
+                $(".usersChatList").remove();
                 $("#chatApp").append(`
                   <div class="usersChatList">
                       <div class="card">
