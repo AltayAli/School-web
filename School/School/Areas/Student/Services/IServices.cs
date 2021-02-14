@@ -1,4 +1,6 @@
-﻿using School.Areas.Student.ViewModels;
+﻿using DevExtreme.AspNet.Data.ResponseModel;
+using School.Areas.Extensions;
+using School.Areas.Student.ViewModels;
 using School.Models;
 using System.Collections.Generic;
 
@@ -9,5 +11,7 @@ namespace School.Areas.Student.Services
         List<CalendarViewModel> GetCalendar();
         Dictionary<string, object> GetJournal();
         List<Lesson> GetLessonsList();
+        LoadResult GetMonitorings(DevxLoadOptions options);
+        void CreateMonitoring(MonitoringViewModel model);
     }
 }

@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Sərbəst işlər";
+}
+
+@section Header {
+    @*Page header*@
+    <div class="page-header page-header-light mb-2">
+        <div class="page-header-content header-elements-md-inline">
+            <div class="page-title d-flex">
+                <h4><i class="icon-box-add mr-2 icon-2x"></i> <span class="font-weight-semibold" id="title"></span></h4>
+                <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+            </div>
+            <div class="header-elements d-none">
+                <div class="d-flex justify-content-center">
+
+                    <a href="/student/home" class="btn btn-link btn-float text-default"><span class="text-primary icon-font-size-1-5-rem pt-0"><i class="fas fa-list"></i></span> <span>Dərs cədvəlinə qayıt</span></a>
+                    <a href="/student/journal" class="btn btn-link btn-float text-default"><span class="text-primary icon-font-size-1-5-rem pt-0"><i class="fas fa-journal-whills"></i></span> <span>Jurnal</span></a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @*/page header*@
+}
+<!--Page modal-->
+
+
+
+<div class="card" id="mainCard">
+    <div class="card-body">
+        <div id="popup">
+            <div id="fileUploader"></div>
+        </div>
+        <div id="body"></div>
+    </div>
+</div>
+
+@section Styles{
+    <link href="~/cdn.css/dx.common.css" rel="stylesheet" />
+    <link href="~/cdn.css/dx.material.blue.light.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/cdn.js/jszip.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn3.devexpress.com/jslib/20.2.5/js/dx.all.js"></script>
+    <script src="~/cdn.js/dx.aspnet.data.min.js"></script>
+    <script src="~/cdn.js/dx.aspnet.mvc.js"></script>
+    <script src="~/cdn.js/devextreme-intl.min.js"></script>
+    <script src="~/ui.js/student-minotorings.js" type="module"></script>
+}

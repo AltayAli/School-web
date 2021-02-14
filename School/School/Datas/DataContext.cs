@@ -42,6 +42,10 @@ namespace School.Datas
             {
                 entity.HasIndex(prop => new { prop.StudentId,prop.TeacherId }).IsUnique(true);
             });
+            modelBuilder.Entity<Monitoring>(entity =>
+            {
+                entity.HasIndex(prop => new { prop.GroupId,prop.Name,prop.StudentId }).IsUnique(true);
+            });
 
             base.OnModelCreating(modelBuilder);
         }

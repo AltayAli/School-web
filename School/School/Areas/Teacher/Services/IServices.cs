@@ -5,5 +5,6 @@
         ILessonService LessonService { get; }
         IGroupsService GroupsService { get; }
         IJournalService JournalService { get; }
+        IMonitoringService MonitoringService { get; }
     }
 }

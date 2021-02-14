@@ -1,13 +1,19 @@
-﻿using School.Areas.Teacher.Repositories;
+﻿using Microsoft.AspNetCore.Http;
+using School.Areas.Teacher.Repositories;
+using School.Datas;
 
 namespace School.Areas.Teacher.Services
 {
     public class Services : IServices
     {
         private readonly IRepository _repo;
-        public Services(IRepository repo)
+        private readonly DataContext _context;
+        private readonly IHttpContextAccessor _accessor;
+        public Services(IRepository repo, DataContext context, IHttpContextAccessor accessor)
         {
             _repo = repo;
+            _accessor = accessor;
+            _context = context;
         }
         private ILessonService _lessonService;
         public ILessonService LessonService
@@ -34,6 +40,17 @@ namespace School.Areas.Teacher.Services
             {
                 _journalService ??= new JournalService(_repo);
                 return _journalService;
+            }
+        }
+
+        private IMonitoringService _monitoringService;
+
+        public IMonitoringService MonitoringService
+        {
+            get
+            {
+                _monitoringService ??= new MonitoringService(_context,_accessor);
+                return _monitoringService;
             }
         }
     }

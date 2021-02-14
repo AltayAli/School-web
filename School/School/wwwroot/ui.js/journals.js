@@ -88,7 +88,6 @@ $(function () {
                                 break;
                             }
                         }
-                        console.log(array);
                         return Model.SendRequest("/teacher/journals/update/" + key, "PUT", true, JSON.stringify(object));
                     },
                     remove: function (key) {

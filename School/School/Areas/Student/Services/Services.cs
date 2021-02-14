@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using School.Areas.Student.ViewModels;
 using School.Datas;
 using School.Models;
 using System.Collections.Generic;
 using System.Linq;
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Data.ResponseModel;
+using School.Areas.Extensions;
 
 namespace School.Areas.Student.Services
 {
@@ -119,9 +123,25 @@ namespace School.Areas.Student.Services
             where u.Role == Enums.Roles.Student && u.Id == _accessor.HttpContext.Session.GetInt32("id")
             select l).ToList();
 
+        public LoadResult GetMonitorings(DevxLoadOptions options)
+        {
+            return DataSourceLoader.Load(_context.Monitorings.Where(x =>
+                x.StudentId == _accessor.HttpContext.Session.GetInt32("id") &&
+                x.GroupId == _context.Users
+                            .FirstOrDefault(y=>y.Id== _accessor.HttpContext.Session.GetInt32("id")).Class_Id), options);
+        }
         public void CreateMonitoring(MonitoringViewModel model)
         {
-            //BUnu yazmalisan
+            var updatedModel = _context.Monitorings.FirstOrDefault(x => x.Id == model.Id);
+
+            if (updatedModel.DeadLine>DateTime.Now||updatedModel.Score!=null)
+                    throw new Exception("Dəyişməyə icazəniz yoxdur.");
+            
+
+            _context.Attach(updatedModel);
+            updatedModel.Path = model.Path;
+
+            _context.SaveChanges();
         }
     }
 }
